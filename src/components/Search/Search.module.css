@@ -1,0 +1,7 @@
+.Search {
+  @apply block box-border;
+}
+
+.Search__input {
+  @apply bg-pearl block w-full py-3 px-5 rounded-full placeholder:text-black outline-primary;
+}
