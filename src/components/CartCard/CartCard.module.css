@@ -1,0 +1,27 @@
+.CartCard {
+  @apply bg-pearl min-w-[160px] rounded-lg overflow-hidden grid grid-cols-[160px_1fr];
+
+  &__container {
+    @apply w-full px-4 py-2;
+  }
+
+  &__actions {
+    @apply flex justify-end;
+  }
+
+  &__button {
+    @apply p-2 outline-primary;
+  }
+
+  &__content {
+    @apply pt-1;
+  }
+
+  &__name {
+    @apply text-lg mb-2;
+  }
+
+  &__price {
+    @apply font-bold mb-4;
+  }
+}

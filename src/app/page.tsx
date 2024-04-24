@@ -33,8 +33,8 @@ export default function Home() {
           </Link>
         </div>
         <div className="flex flex-nowrap max-w-full overflow-auto space-x-5 pr-6 pb-2">
-          <Category title="hoddies" />
-          <Category title="shorts" />
+          <Category title="hoddies" link="/categories/hoodies" />
+          <Category title="shorts" link="/categories/shorts" />
           <Category title="shoes" />
           <Category title="shoes" />
           <Category title="shoes" />
