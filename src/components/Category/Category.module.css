@@ -1,0 +1,11 @@
+.Category {
+  @apply flex items-center flex-col;
+}
+
+.Category__image {
+  @apply block mb-1;
+}
+
+.Category__title {
+  @apply block font-normal first-letter:uppercase text-sm;
+}
