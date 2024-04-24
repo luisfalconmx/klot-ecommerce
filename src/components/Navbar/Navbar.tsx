@@ -10,7 +10,7 @@ export const Navbar = () => (
   <nav className={styles["Navbar"]}>
     <ul className={styles["Navbar__list"]}>
       <li className={styles["Navbar__item"]}>
-        <Link href="/home">
+        <Link href="/">
           <Image
             src={IconHome}
             alt=""
@@ -21,7 +21,7 @@ export const Navbar = () => (
         </Link>
       </li>
       <li className={styles["Navbar__item"]}>
-        <Link href="/favorites">
+        <Link href="/wishlist">
           <Image
             src={IconFavorites}
             alt=""
