@@ -1,5 +1,5 @@
 .ProductCard {
-  @apply bg-pearl min-w-[160px] rounded-xl overflow-hidden;
+  @apply bg-pearl min-w-[160px] rounded-lg overflow-hidden;
 
   &__head {
     @apply relative;

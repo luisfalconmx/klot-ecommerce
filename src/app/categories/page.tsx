@@ -18,8 +18,8 @@ export default function Categories() {
       </h1>
 
       <div className="flex flex-col space-y-3">
-        <Category variant="track" title="Hoodies" />
-        <Category variant="track" title="Hoodies" />
+        <Category variant="track" title="Hoodies" link="/categories/hoodies" />
+        <Category variant="track" title="Shorts" link="/categories/shorts" />
         <Category variant="track" title="Hoodies" />
         <Category variant="track" title="Hoodies" />
         <Category variant="track" title="Hoodies" />
