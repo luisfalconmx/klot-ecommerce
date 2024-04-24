@@ -1,11 +1,19 @@
 .Category {
   @apply flex items-center flex-col min-w-[56px];
-}
 
-.Category__image {
-  @apply block mb-1;
-}
+  &--track {
+    @apply flex-row bg-pearl rounded-lg space-x-5 p-3;
+  }
 
-.Category__title {
-  @apply block font-normal first-letter:uppercase text-sm;
+  &__image {
+    @apply block mb-1 rounded-full;
+  }
+
+  &__title {
+    @apply block font-normal first-letter:uppercase text-sm;
+  }
+
+  &--track &__title {
+    @apply text-lg;
+  }
 }

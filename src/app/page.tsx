@@ -28,7 +28,7 @@ export default function Home() {
       <section className="ml-6 mb-8">
         <div className="flex justify-between items-center mb-4 mr-6">
           <h2 className="text-lg text-primary-100 font-bold">Categories</h2>
-          <Link href="#" className="font-medium underline">
+          <Link href="/categories" className="font-medium underline">
             See all
           </Link>
         </div>
