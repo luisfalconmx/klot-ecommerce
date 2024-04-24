@@ -1,5 +1,5 @@
 .Category {
-  @apply flex items-center flex-col;
+  @apply flex items-center flex-col min-w-[56px];
 }
 
 .Category__image {

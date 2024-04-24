@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import IconHome from "@/assets/icons/icon-home.svg";
-import IconNotification from "@/assets/icons/icon-notification.svg";
-import IconTicket from "@/assets/icons/icon-ticket.svg";
+import IconBag from "@/assets/icons/icon-bag-alt.svg";
+import IconFavorites from "@/assets/icons/icon-fav-alt.svg";
 import IconUser from "@/assets/icons/icon-user.svg";
 import styles from "./Navbar.module.css";
 
@@ -21,9 +21,9 @@ export const Navbar = () => (
         </Link>
       </li>
       <li className={styles["Navbar__item"]}>
-        <Link href="/notifications">
+        <Link href="/favorites">
           <Image
-            src={IconNotification}
+            src={IconFavorites}
             alt=""
             width={48}
             height={48}
@@ -34,7 +34,7 @@ export const Navbar = () => (
       <li className={styles["Navbar__item"]}>
         <Link href="/cart">
           <Image
-            src={IconTicket}
+            src={IconBag}
             alt=""
             width={48}
             height={48}

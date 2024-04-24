@@ -1,0 +1,23 @@
+.ProductCard {
+  @apply bg-pearl min-w-[160px] rounded-xl overflow-hidden;
+
+  &__head {
+    @apply relative;
+  }
+
+  &__button {
+    @apply absolute top-0 right-0 p-2 outline-primary z-10;
+  }
+
+  &__content {
+    @apply px-3 py-4;
+  }
+
+  &__name {
+    @apply text-sm mb-2;
+  }
+
+  &__price {
+    @apply font-bold;
+  }
+}
