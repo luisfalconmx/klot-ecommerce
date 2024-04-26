@@ -2,11 +2,15 @@
   @apply flex items-center flex-col min-w-[56px];
 
   &--track {
-    @apply flex-row bg-pearl rounded-lg space-x-3 p-3;
+    @apply flex-row bg-[#e3e3e3] rounded-lg space-x-3 p-3;
   }
 
   &__image {
     @apply block mb-1 rounded-full w-[56px] h-[56px] object-cover object-top;
+  }
+
+  &--track &__image {
+    @apply rounded-none;
   }
 
   &__title {
