@@ -1,5 +1,5 @@
 .ProductCard {
-  @apply bg-pearl min-w-[160px] rounded-lg overflow-hidden;
+  @apply bg-pearl min-w-[180px] rounded-lg overflow-hidden max-w-[180px];
 
   &__head {
     @apply relative;
@@ -7,6 +7,10 @@
 
   &__button {
     @apply absolute top-0 right-0 p-2 outline-primary z-10;
+  }
+
+  &__image {
+    @apply w-full block h-[230px] object-cover;
   }
 
   &__content {

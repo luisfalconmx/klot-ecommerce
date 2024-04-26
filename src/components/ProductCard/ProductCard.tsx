@@ -17,9 +17,15 @@ export const ProductCard = ({
   return (
     <div className={styles["ProductCard"]}>
       <div className={styles["ProductCard__head"]}>
-        <Image src={image} alt="" width={160} height={220} />
+        <Image
+          className={styles["ProductCard__image"]}
+          src={image}
+          alt=""
+          width={160}
+          height={220}
+        />
         <button className={styles["ProductCard__button"]}>
-          <Image src={IconFav} alt="" width={24} height={24} />
+          <Image src={IconFav} alt={name} width={24} height={24} />
         </button>
       </div>
       <div className={styles["ProductCard__content"]}>

@@ -6,7 +6,7 @@
   }
 
   &__image {
-    @apply block mb-1 rounded-full;
+    @apply block mb-1 rounded-full w-[56px] h-[56px] object-cover object-top;
   }
 
   &__title {

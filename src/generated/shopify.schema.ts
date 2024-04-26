@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -6,6 +7,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -14567,6 +14569,8 @@ export type DraftOrderInput = {
    * Product variant line item or custom line item associated to the draft order.
    * Each draft order must include at least one line item.
    *
+   * NOTE: Draft orders don't currently support subscriptions.
+   *
    */
   lineItems?: InputMaybe<Array<DraftOrderLineItemInput>>;
   /** The localization extensions attached to the draft order. For example, Tax IDs. */
@@ -19687,7 +19691,7 @@ export enum InventoryAdjustQuantitiesUserErrorCode {
   ItemNotStockedAtLocation = 'ITEM_NOT_STOCKED_AT_LOCATION',
   /** All changes must have the same ledger document URI or, in the case of adjusting available, no ledger document URI. */
   MaxOneLedgerDocument = 'MAX_ONE_LEDGER_DOCUMENT',
-  /** The specified inventory item is not allowed to be adjusted via API. */
+  /** The specified inventory item is not allowed to be adjusted via API. Example: if the inventory item is a parent bundle. */
   NonMutableInventoryItem = 'NON_MUTABLE_INVENTORY_ITEM'
 }
 
@@ -20156,7 +20160,7 @@ export enum InventoryMoveQuantitiesUserErrorCode {
   MaximumLedgerDocumentUris = 'MAXIMUM_LEDGER_DOCUMENT_URIS',
   /** The quantities couldn't be moved. Try again. */
   MoveQuantitiesFailed = 'MOVE_QUANTITIES_FAILED',
-  /** The specified inventory item is not allowed to be adjusted via API. */
+  /** The specified inventory item is not allowed to be adjusted via API. Example: if the inventory item is a parent bundle. */
   NonMutableInventoryItem = 'NON_MUTABLE_INVENTORY_ITEM',
   /** The quantity names for each change can't be the same. */
   SameQuantityName = 'SAME_QUANTITY_NAME'
@@ -20304,9 +20308,19 @@ export type InventoryScheduledChangeEdge = {
 export type InventoryScheduledChangeInput = {
   /** The date and time that the scheduled change is expected to happen. */
   expectedAt: Scalars['DateTime']['input'];
-  /** The state to transition from. */
+  /**
+   * The quantity
+   * [name](https://shopify.dev/docs/apps/fulfillment/inventory-management-apps/quantities-states#move-inventory-quantities-between-states)
+   * to transition from.
+   *
+   */
   fromName: Scalars['String']['input'];
-  /** The state to transition to. */
+  /**
+   * The quantity
+   * [name](https://shopify.dev/docs/apps/fulfillment/inventory-management-apps/quantities-states#move-inventory-quantities-between-states)
+   * to transition to.
+   *
+   */
   toName: Scalars['String']['input'];
 };
 
@@ -20372,7 +20386,7 @@ export enum InventorySetOnHandQuantitiesUserErrorCode {
   InvalidReferenceDocument = 'INVALID_REFERENCE_DOCUMENT',
   /** The inventory item is not stocked at the location. */
   ItemNotStockedAtLocation = 'ITEM_NOT_STOCKED_AT_LOCATION',
-  /** The specified inventory item is not allowed to be adjusted via API. */
+  /** The specified inventory item is not allowed to be adjusted via API. Example: if the inventory item is a parent bundle. */
   NonMutableInventoryItem = 'NON_MUTABLE_INVENTORY_ITEM',
   /** The on-hand quantities couldn't be set. Try again. */
   SetOnHandQuantitiesFailed = 'SET_ON_HAND_QUANTITIES_FAILED'
@@ -23862,6 +23876,8 @@ export enum MarketingTactic {
   Post = 'POST',
   /** A retargeting ad. */
   Retargeting = 'RETARGETING',
+  /** Search engine optimization. */
+  Seo = 'SEO',
   /** A popup on the online store. */
   StorefrontApp = 'STOREFRONT_APP',
   /** A transactional email. */
@@ -27302,8 +27318,8 @@ export type Mutation = {
    * 3. Use the [inventoryBulkToggleActivation](https://shopify.dev/api/admin-graphql/latest/mutations/inventoryBulkToggleActivation) mutation
    * on each [inventory item](https://shopify.dev/api/admin-graphql/latest/objects/InventoryItem) to activate it at the appropriate locations.
    *
-   * 4. After activating the variants at the locations, adjust inventory quantities at each location using the
-   * [inventoryBulkAdjustQuantityAtLocation](https://shopify.dev/api/admin-graphql/latest/mutations/inventoryBulkAdjustQuantityAtLocation) mutation.
+   * 4. After activating the variants at the locations, adjust inventory quantities for the inventory items using the
+   * [inventoryAdjustQuantities](https://shopify.dev/api/admin-graphql/latest/mutations/inventoryAdjustQuantities) mutation.
    *
    */
   productCreate?: Maybe<ProductCreatePayload>;
@@ -36615,8 +36631,6 @@ export type ProductInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
   /** The metafields to associate with this product. */
   metafields?: InputMaybe<Array<MetafieldInput>>;
-  /** The product category in the Shopify product taxonomy. */
-  productCategory?: InputMaybe<ProductCategoryInput>;
   /**
    * List of custom product options and option values (maximum of 3 per product).
    * Supported as input with the `productCreate` mutation only.
@@ -36635,8 +36649,6 @@ export type ProductInput = {
   requiresSellingPlan?: InputMaybe<Scalars['Boolean']['input']>;
   /** The SEO information associated with the product. */
   seo?: InputMaybe<SeoInput>;
-  /** The standardized product type in the Shopify product taxonomy. */
-  standardizedProductType?: InputMaybe<StandardizedProductTypeInput>;
   /** The status of the product. */
   status?: InputMaybe<ProductStatus>;
   /** A comma separated list of tags that have been added to the product. */
@@ -37243,8 +37255,6 @@ export type ProductSetInput = {
   mediaIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** The metafields to associate with this product. */
   metafields?: InputMaybe<Array<MetafieldInput>>;
-  /** The product category in the Shopify product taxonomy. */
-  productCategory?: InputMaybe<ProductCategoryInput>;
   /** List of custom product options and option values (maximum of 3 per product). */
   productOptions: Array<OptionSetInput>;
   /** The product type specified by the merchant. */
@@ -37259,8 +37269,6 @@ export type ProductSetInput = {
   requiresSellingPlan?: InputMaybe<Scalars['Boolean']['input']>;
   /** The SEO information associated with the product. */
   seo?: InputMaybe<SeoInput>;
-  /** The standardized product type in the Shopify product taxonomy. */
-  standardizedProductType?: InputMaybe<StandardizedProductTypeInput>;
   /** The status of the product. */
   status?: InputMaybe<ProductStatus>;
   /** A comma separated list of tags that have been added to the product. */
@@ -52632,3 +52640,117 @@ export type DeliveryProfileUpdatePayload = {
   /** The list of errors that occurred from executing the mutation. */
   userErrors: Array<UserError>;
 };
+
+export type GetCollectionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCollectionsQuery = { __typename?: 'QueryRoot', shop: { __typename?: 'Shop', name: string }, collections: { __typename?: 'CollectionConnection', edges: Array<{ __typename?: 'CollectionEdge', node: { __typename?: 'Collection', id: string, title: string, image?: { __typename?: 'Image', url: any } | null } }> } };
+
+export type GetProductsByTagQueryVariables = Exact<{
+  tag: Scalars['String']['input'];
+}>;
+
+
+export type GetProductsByTagQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', title: string, featuredImage?: { __typename?: 'Image', url: any } | null, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } } }> } };
+
+
+export const GetCollectionsDocument = gql`
+    query GetCollections {
+  shop {
+    name
+  }
+  collections(first: 10) {
+    edges {
+      node {
+        id
+        title
+        image {
+          url
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetCollectionsQuery__
+ *
+ * To run a query within a React component, call `useGetCollectionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCollectionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCollectionsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCollectionsQuery(baseOptions?: Apollo.QueryHookOptions<GetCollectionsQuery, GetCollectionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCollectionsQuery, GetCollectionsQueryVariables>(GetCollectionsDocument, options);
+      }
+export function useGetCollectionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCollectionsQuery, GetCollectionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCollectionsQuery, GetCollectionsQueryVariables>(GetCollectionsDocument, options);
+        }
+export function useGetCollectionsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCollectionsQuery, GetCollectionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCollectionsQuery, GetCollectionsQueryVariables>(GetCollectionsDocument, options);
+        }
+export type GetCollectionsQueryHookResult = ReturnType<typeof useGetCollectionsQuery>;
+export type GetCollectionsLazyQueryHookResult = ReturnType<typeof useGetCollectionsLazyQuery>;
+export type GetCollectionsSuspenseQueryHookResult = ReturnType<typeof useGetCollectionsSuspenseQuery>;
+export type GetCollectionsQueryResult = Apollo.QueryResult<GetCollectionsQuery, GetCollectionsQueryVariables>;
+export const GetProductsByTagDocument = gql`
+    query GetProductsByTag($tag: String!) {
+  products(first: 10, query: $tag) {
+    nodes {
+      title
+      featuredImage {
+        url
+      }
+      priceRangeV2 {
+        minVariantPrice {
+          amount
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetProductsByTagQuery__
+ *
+ * To run a query within a React component, call `useGetProductsByTagQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductsByTagQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductsByTagQuery({
+ *   variables: {
+ *      tag: // value for 'tag'
+ *   },
+ * });
+ */
+export function useGetProductsByTagQuery(baseOptions: Apollo.QueryHookOptions<GetProductsByTagQuery, GetProductsByTagQueryVariables> & ({ variables: GetProductsByTagQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProductsByTagQuery, GetProductsByTagQueryVariables>(GetProductsByTagDocument, options);
+      }
+export function useGetProductsByTagLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductsByTagQuery, GetProductsByTagQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProductsByTagQuery, GetProductsByTagQueryVariables>(GetProductsByTagDocument, options);
+        }
+export function useGetProductsByTagSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetProductsByTagQuery, GetProductsByTagQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetProductsByTagQuery, GetProductsByTagQueryVariables>(GetProductsByTagDocument, options);
+        }
+export type GetProductsByTagQueryHookResult = ReturnType<typeof useGetProductsByTagQuery>;
+export type GetProductsByTagLazyQueryHookResult = ReturnType<typeof useGetProductsByTagLazyQuery>;
+export type GetProductsByTagSuspenseQueryHookResult = ReturnType<typeof useGetProductsByTagSuspenseQuery>;
+export type GetProductsByTagQueryResult = Apollo.QueryResult<GetProductsByTagQuery, GetProductsByTagQueryVariables>;

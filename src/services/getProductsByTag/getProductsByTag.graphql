@@ -1,0 +1,15 @@
+query GetProductsByTag($tag: String!) {
+  products(first: 10, query: $tag) {
+    nodes {
+      title
+      featuredImage {
+        url
+      }
+      priceRangeV2 {
+        minVariantPrice {
+          amount
+        }
+      }
+    }
+  }
+}

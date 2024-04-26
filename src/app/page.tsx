@@ -3,8 +3,13 @@ import Link from "next/link";
 import { Search, Category, ProductCard } from "@/components";
 import Logo from "@/assets/images/logo.svg";
 import IconBag from "@/assets/icons/icon-bag.svg";
+import { getCollections, getProductsByTag } from "@/services";
+import { createSlug } from "@/utils";
 
-export default function Home() {
+export default async function Home() {
+  const categories = await getCollections();
+  const topSelling = await getProductsByTag("top_selling");
+
   return (
     <main className="mt-12 mb-24">
       <section className="flex mx-6 justify-between mb-8">
@@ -33,20 +38,39 @@ export default function Home() {
           </Link>
         </div>
         <div className="flex flex-nowrap max-w-full overflow-auto space-x-5 pr-6 pb-2">
-          <Category title="hoddies" link="/categories/hoodies" />
-          <Category title="shorts" link="/categories/shorts" />
-          <Category title="shoes" />
-          <Category title="shoes" />
-          <Category title="shoes" />
-          <Category title="shoes" />
-          <Category title="shoes" />
-          <Category title="shoes" />
+          {categories?.collections.edges.map((i) => (
+            <Category
+              key={i.node.id}
+              title={i.node.title || ""}
+              image={i.node.image?.url || ""}
+              link={`/categories/${createSlug(i.node.title || "")}`}
+            />
+          ))}
         </div>
       </section>
 
       <section className="ml-6 mb-8">
         <div className="flex justify-between items-center mb-4 mr-6">
           <h2 className="text-lg text-primary-100 font-bold">Top Selling</h2>
+          <Link href="#" className="font-medium underline">
+            See all
+          </Link>
+        </div>
+        <div className="flex space-x-4 flex-nowrap w-fit max-w-full overflow-x-auto pr-6 pb-2">
+          {topSelling?.products.nodes.map((i) => (
+            <ProductCard
+              key={i.title}
+              name={i.title}
+              price={i.priceRangeV2.minVariantPrice.amount}
+              image={i.featuredImage?.url}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="ml-6 mb-8">
+        <div className="flex justify-between items-center mb-4 mr-6">
+          <h2 className="text-lg text-primary-100 font-bold">Seasonal</h2>
           <Link href="#" className="font-medium underline">
             See all
           </Link>
@@ -61,7 +85,9 @@ export default function Home() {
 
       <section className="ml-6 mb-8">
         <div className="flex justify-between items-center mb-4 mr-6">
-          <h2 className="text-lg text-primary-100 font-bold">New In</h2>
+          <h2 className="text-lg text-primary-100 font-bold">
+            Limited Editions
+          </h2>
           <Link href="#" className="font-medium underline">
             See all
           </Link>
