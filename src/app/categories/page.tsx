@@ -28,7 +28,7 @@ export default async function Categories() {
             variant="track"
             title={i.node.title}
             image={i.node.image?.url}
-            link={`/categories/${createSlug(i.node.title)}`}
+            link={`/categories/${createSlug(i.node.handle)}`}
           />
         ))}
       </div>

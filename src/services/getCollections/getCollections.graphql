@@ -1,11 +1,9 @@
 query GetCollections {
-  shop {
-    name
-  }
-  collections(first: 10) {
+  collections(first: 10, sortKey: TITLE, reverse: true) {
     edges {
       node {
         id
+        handle
         title
         image {
           url

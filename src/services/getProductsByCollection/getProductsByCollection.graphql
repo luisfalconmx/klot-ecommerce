@@ -1,0 +1,21 @@
+query GetProductsByCollection($handle: String!) {
+  collectionByHandle(handle: $handle) {
+    productsCount {
+      count
+    }
+    products(first: 10) {
+      nodes {
+        id
+        title
+        featuredImage {
+          url
+        }
+        priceRangeV2 {
+          minVariantPrice {
+            amount
+          }
+        }
+      }
+    }
+  }
+}
