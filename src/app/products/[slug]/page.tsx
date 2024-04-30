@@ -6,15 +6,66 @@ import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
 import IconFav from "@/assets/icons/icon-fav.svg";
 import IconPlus from "@/assets/icons/icon-plus.svg";
 import IconMinus from "@/assets/icons/icon-minus.svg";
+import { notFound } from "next/navigation";
 
 interface ProductProps {
   params: {
     slug: string;
   };
+  searchParams: {
+    size?: string;
+    color?: string;
+  };
 }
 
-export default async function Product({ params }: ProductProps) {
+export default async function Product({ params, searchParams }: ProductProps) {
   const data = await getProductBySlug(params.slug);
+
+  let selectedVariant;
+
+  if (searchParams.color && searchParams.size) {
+    // const tempSelectedVariant = data?.productByHandle?.variants.nodes.find(
+    //   (i) => {
+    //     const matchColor = i.selectedOptions[0].value
+    //       .toLowerCase()
+    //       .includes(searchParams.color || "");
+    //     const matchSize = i.selectedOptions[0].value
+    //       .toLowerCase()
+    //       .includes(searchParams.color || "");
+    //     return matchColor && matchSize;
+    //   }
+    // );
+    // if (!tempSelectedVariant) return notFound();
+    // selectedVariant = tempSelectedVariant;
+  } else if (searchParams.color) {
+    // const tempSelectedVariant = data?.productByHandle?.variants.nodes.find(
+    //   (i) =>
+    //     i.selectedOptions[0].value
+    //       .toLowerCase()
+    //       .includes(searchParams.color || "")
+    // );
+    // if (!tempSelectedVariant) return notFound();
+    // selectedVariant = tempSelectedVariant;
+  } else if (searchParams.size) {
+    // const tempSelectedVariant = data?.productByHandle?.variants.nodes.find(
+    //   (i) =>
+    //     i.selectedOptions[0].value
+    //       .toLowerCase()
+    //       .includes(searchParams.size || "")
+    // );
+    // if (!tempSelectedVariant) return notFound();
+    // selectedVariant = tempSelectedVariant;
+  } else {
+    selectedVariant = data?.productByHandle?.variants.nodes[0];
+  }
+
+  const hasOnlyDefaultVariant = data?.productByHandle?.hasOnlyDefaultVariant;
+  let productImage = hasOnlyDefaultVariant
+    ? data.productByHandle?.featuredImage?.src
+    : selectedVariant?.image?.url;
+  let title = data?.productByHandle?.title;
+  let price = selectedVariant?.price;
+  let quantity = selectedVariant?.inventoryQuantity || 0;
 
   return (
     <main className="mt-6 mb-24">
@@ -33,68 +84,79 @@ export default async function Product({ params }: ProductProps) {
 
       <section className="ml-6 mb-6 flex flex-nowrap overflow-auto space-x-2">
         <Image
-          src={data?.productByHandle?.featuredImage?.src}
-          alt=""
+          src={productImage}
+          alt={title || ""}
           width={300}
           height={400}
-          className="rounded-lg h-[240px]"
-        />
-        <Image
-          src={data?.productByHandle?.featuredImage?.src}
-          alt=""
-          width={300}
-          height={400}
-          className="rounded-lg h-[240px]"
+          className="rounded-lg h-[300px] object-cover object-top"
         />
       </section>
 
       <section className="mx-6">
-        <h1 className="font-bold text-2xl mb-4">
-          {data?.productByHandle?.title}
-        </h1>
-        <b className="font-bold text-2xl text-primary mb-6 block">$148</b>
+        <h1 className="font-bold text-2xl mb-4">{title}</h1>
+        <div className="flex items-center space-x-2 mb-6">
+          <b className="font-bold text-2xl text-primary  block">${price}</b>
+          {quantity <= 0 && (
+            <span className="text-red-500 font-bold text-xl">
+              - out of stock
+            </span>
+          )}
+        </div>
       </section>
 
       <section className="mx-6 mb-8 flex flex-col space-y-4">
-        <button className="flex justify-between bg-pearl rounded-full py-4 px-6 items-center text-left gap-x-4">
-          <p className="font-bold">Size</p>
-          <div className="flex items-center space-x-4">
-            <b className="w-6 text-center block">S</b>
-            <Image src={IconArrowDown} alt="" width={24} height={24} />
-          </div>
-        </button>
+        {!hasOnlyDefaultVariant && (
+          <button className="flex justify-between bg-pearl rounded-full py-4 px-6 items-center text-left gap-x-4">
+            <p className="font-bold">Size</p>
+            <div className="flex items-center space-x-4">
+              <b className="w-6 text-center block">S</b>
+              <Image src={IconArrowDown} alt="" width={24} height={24} />
+            </div>
+          </button>
+        )}
 
-        <button className="flex justify-between bg-pearl rounded-full py-4 px-6 items-center text-left gap-x-4">
-          <p className="font-bold">Color</p>
-          <div className="flex items-center space-x-4">
-            <div className="bg-green-600 w-6 h-6 rounded-full" />
-            <Image src={IconArrowDown} alt="" width={24} height={24} />
-          </div>
-        </button>
+        {!hasOnlyDefaultVariant && (
+          <button className="flex justify-between bg-pearl rounded-full py-4 px-6 items-center text-left gap-x-4">
+            <p className="font-bold">Color</p>
+            <div className="flex items-center space-x-4">
+              <div className="bg-green-600 w-6 h-6 rounded-full" />
+              <Image src={IconArrowDown} alt="" width={24} height={24} />
+            </div>
+          </button>
+        )}
 
         <div className="flex justify-between bg-pearl rounded-full py-4 px-6 items-center text-left gap-x-4">
           <p className="font-bold">Quantity</p>
           <div className="flex items-center space-x-2">
-            <button className="bg-primary p-1 rounded-full">
+            <button
+              className="bg-primary disabled:bg-gray-300 p-1 rounded-full"
+              disabled={quantity <= 0}
+            >
               <Image src={IconMinus} alt="" width={24} height={24} />
             </button>
             <input
               type="number"
-              defaultValue={1}
+              defaultValue={quantity ? 1 : 0}
               min={1}
-              max={10}
+              max={quantity}
               step={1}
               className="text-center text-xl appearance-none bg-transparent font-bold"
               disabled
             />
-            <button className="bg-primary p-1 rounded-full">
+            <button
+              className="bg-primary p-1 rounded-full disabled:bg-gray-300"
+              disabled={quantity <= 0}
+            >
               <Image src={IconPlus} alt="" width={24} height={24} />
             </button>
           </div>
         </div>
 
-        <button className="bg-primary flex justify-between px-6 items-center text-white rounded-full py-4">
-          <span className="font-bold">$148</span>
+        <button
+          className="bg-primary flex justify-between px-6 items-center text-white rounded-full py-4 disabled:bg-pearl disabled:text-neutral-400"
+          disabled={quantity <= 0}
+        >
+          <span className="font-bold">${price}</span>
           <span className="">Add to bag</span>
         </button>
       </section>

@@ -30970,7 +30970,7 @@ export type OnlineStoreBlogTranslationsArgs = {
   marketId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-/** A custom page on the Online Store. */
+/** A page on the Online Store. */
 export type OnlineStorePage = HasPublishedTranslations & Navigable & Node & {
   __typename?: 'OnlineStorePage';
   /**
@@ -30985,7 +30985,7 @@ export type OnlineStorePage = HasPublishedTranslations & Navigable & Node & {
 };
 
 
-/** A custom page on the Online Store. */
+/** A page on the Online Store. */
 export type OnlineStorePageTranslationsArgs = {
   locale: Scalars['String']['input'];
   marketId?: InputMaybe<Scalars['ID']['input']>;
@@ -52660,7 +52660,7 @@ export type GetProductBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'QueryRoot', productByHandle?: { __typename?: 'Product', title: string, description: string, featuredImage?: { __typename?: 'Image', src: any } | null } | null };
+export type GetProductBySlugQuery = { __typename?: 'QueryRoot', productByHandle?: { __typename?: 'Product', title: string, description: string, hasOnlyDefaultVariant: boolean, variants: { __typename?: 'ProductVariantConnection', nodes: Array<{ __typename?: 'ProductVariant', displayName: string, availableForSale: boolean, price: any, inventoryQuantity?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, image?: { __typename?: 'Image', url: any } | null }> }, images: { __typename?: 'ImageConnection', nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null }> }, featuredImage?: { __typename?: 'Image', src: any } | null } | null };
 
 export type GetProductsByCollectionQueryVariables = Exact<{
   handle: Scalars['String']['input'];
@@ -52730,6 +52730,28 @@ export const GetProductBySlugDocument = gql`
   productByHandle(handle: $slug) {
     title
     description
+    hasOnlyDefaultVariant
+    variants(first: 10) {
+      nodes {
+        displayName
+        availableForSale
+        price
+        inventoryQuantity
+        selectedOptions {
+          name
+          value
+        }
+        image {
+          url
+        }
+      }
+    }
+    images(first: 10) {
+      nodes {
+        url
+        altText
+      }
+    }
     featuredImage {
       src
     }

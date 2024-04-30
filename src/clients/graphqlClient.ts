@@ -15,6 +15,9 @@ const { getClient } = registerApolloClient(() => {
         "X-Shopify-Access-Token": SHOPIFY_STOREFRONT_ACCESS_TOKEN,
       },
       uri: SHOPIFY_GRAPHQL_ENDPOINT,
+      fetchOptions: {
+        cache: "no-store",
+      },
       // you can disable result caching here if you want to
       // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
       // fetchOptions: { cache: "no-store" },
