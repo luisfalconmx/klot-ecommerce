@@ -26803,6 +26803,13 @@ export type Mutation = {
    * [stagedUploadsCreate mutation](https://shopify.dev/api/admin-graphql/latest/mutations/stageduploadscreate).
    * These files are added to the [Files page](https://shopify.com/admin/settings/files) in Shopify admin.
    *
+   * Files are processed asynchronously. Some data is not available until processing is completed.
+   * Check [fileStatus](https://shopify.dev/api/admin-graphql/latest/interfaces/File#field-file-filestatus)
+   * to know when the files are READY or FAILED. See the [FileStatus](https://shopify.dev/api/admin-graphql/latest/enums/filestatus)
+   * for the complete set of possible fileStatus values.
+   *
+   * To get a list of all files, use the [files query](https://shopify.dev/api/admin-graphql/latest/queries/files).
+   *
    */
   fileCreate?: Maybe<FileCreatePayload>;
   /** Deletes existing file assets that were uploaded to Shopify. */
@@ -36795,7 +36802,7 @@ export enum ProductOptionUpdateUserErrorCode {
   DuplicateLinkedOption = 'DUPLICATE_LINKED_OPTION',
   /** Invalid metafield value for linked option. */
   InvalidMetafieldValueForLinkedOption = 'INVALID_METAFIELD_VALUE_FOR_LINKED_OPTION',
-  /** The option name provided is not valid. */
+  /** The name provided is not valid. */
   InvalidName = 'INVALID_NAME',
   /** The option position provided is not valid. */
   InvalidPosition = 'INVALID_POSITION',
@@ -36928,6 +36935,8 @@ export enum ProductOptionsCreateUserErrorCode {
   DuplicateLinkedOption = 'DUPLICATE_LINKED_OPTION',
   /** Invalid metafield value for linked option. */
   InvalidMetafieldValueForLinkedOption = 'INVALID_METAFIELD_VALUE_FOR_LINKED_OPTION',
+  /** The name provided is not valid. */
+  InvalidName = 'INVALID_NAME',
   /** No valid metafield definition found for linked option. */
   LinkedMetafieldDefinitionNotFound = 'LINKED_METAFIELD_DEFINITION_NOT_FOUND',
   /** Linked options are currently not supported for this shop. */
@@ -52646,19 +52655,26 @@ export type GetCollectionsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCollectionsQuery = { __typename?: 'QueryRoot', collections: { __typename?: 'CollectionConnection', edges: Array<{ __typename?: 'CollectionEdge', node: { __typename?: 'Collection', id: string, handle: string, title: string, image?: { __typename?: 'Image', url: any } | null } }> } };
 
+export type GetProductBySlugQueryVariables = Exact<{
+  slug: Scalars['String']['input'];
+}>;
+
+
+export type GetProductBySlugQuery = { __typename?: 'QueryRoot', productByHandle?: { __typename?: 'Product', title: string, description: string, featuredImage?: { __typename?: 'Image', src: any } | null } | null };
+
 export type GetProductsByCollectionQueryVariables = Exact<{
   handle: Scalars['String']['input'];
 }>;
 
 
-export type GetProductsByCollectionQuery = { __typename?: 'QueryRoot', collectionByHandle?: { __typename?: 'Collection', productsCount?: { __typename?: 'Count', count: number } | null, products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, title: string, featuredImage?: { __typename?: 'Image', url: any } | null, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } } }> } } | null };
+export type GetProductsByCollectionQuery = { __typename?: 'QueryRoot', collectionByHandle?: { __typename?: 'Collection', productsCount?: { __typename?: 'Count', count: number } | null, products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, handle: string, title: string, featuredImage?: { __typename?: 'Image', url: any } | null, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } } }> } } | null };
 
 export type GetProductsByTagQueryVariables = Exact<{
   tag: Scalars['String']['input'];
 }>;
 
 
-export type GetProductsByTagQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', title: string, featuredImage?: { __typename?: 'Image', url: any } | null, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } } }> } };
+export type GetProductsByTagQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', handle: string, title: string, featuredImage?: { __typename?: 'Image', url: any } | null, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } } }> } };
 
 
 export const GetCollectionsDocument = gql`
@@ -52709,6 +52725,50 @@ export type GetCollectionsQueryHookResult = ReturnType<typeof useGetCollectionsQ
 export type GetCollectionsLazyQueryHookResult = ReturnType<typeof useGetCollectionsLazyQuery>;
 export type GetCollectionsSuspenseQueryHookResult = ReturnType<typeof useGetCollectionsSuspenseQuery>;
 export type GetCollectionsQueryResult = Apollo.QueryResult<GetCollectionsQuery, GetCollectionsQueryVariables>;
+export const GetProductBySlugDocument = gql`
+    query GetProductBySlug($slug: String!) {
+  productByHandle(handle: $slug) {
+    title
+    description
+    featuredImage {
+      src
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetProductBySlugQuery__
+ *
+ * To run a query within a React component, call `useGetProductBySlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetProductBySlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetProductBySlugQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useGetProductBySlugQuery(baseOptions: Apollo.QueryHookOptions<GetProductBySlugQuery, GetProductBySlugQueryVariables> & ({ variables: GetProductBySlugQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetProductBySlugQuery, GetProductBySlugQueryVariables>(GetProductBySlugDocument, options);
+      }
+export function useGetProductBySlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetProductBySlugQuery, GetProductBySlugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetProductBySlugQuery, GetProductBySlugQueryVariables>(GetProductBySlugDocument, options);
+        }
+export function useGetProductBySlugSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetProductBySlugQuery, GetProductBySlugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetProductBySlugQuery, GetProductBySlugQueryVariables>(GetProductBySlugDocument, options);
+        }
+export type GetProductBySlugQueryHookResult = ReturnType<typeof useGetProductBySlugQuery>;
+export type GetProductBySlugLazyQueryHookResult = ReturnType<typeof useGetProductBySlugLazyQuery>;
+export type GetProductBySlugSuspenseQueryHookResult = ReturnType<typeof useGetProductBySlugSuspenseQuery>;
+export type GetProductBySlugQueryResult = Apollo.QueryResult<GetProductBySlugQuery, GetProductBySlugQueryVariables>;
 export const GetProductsByCollectionDocument = gql`
     query GetProductsByCollection($handle: String!) {
   collectionByHandle(handle: $handle) {
@@ -52718,6 +52778,7 @@ export const GetProductsByCollectionDocument = gql`
     products(first: 10) {
       nodes {
         id
+        handle
         title
         featuredImage {
           url
@@ -52769,6 +52830,7 @@ export const GetProductsByTagDocument = gql`
     query GetProductsByTag($tag: String!) {
   products(first: 10, query: $tag) {
     nodes {
+      handle
       title
       featuredImage {
         url

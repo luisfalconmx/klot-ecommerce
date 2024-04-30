@@ -1,0 +1,9 @@
+query GetProductBySlug($slug: String!) {
+  productByHandle(handle: $slug) {
+    title
+    description
+    featuredImage {
+      src
+    }
+  }
+}

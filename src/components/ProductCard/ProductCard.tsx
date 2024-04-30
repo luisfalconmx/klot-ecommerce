@@ -2,12 +2,14 @@ import Image from "next/image";
 import styles from "./ProductCard.module.css";
 import IconFav from "@/assets/icons/icon-fav.svg";
 import ProductCardImage from "@/assets/images/product-card-image.jpg";
+import Link from "next/link";
 import type { ProductCardProps } from "./ProductCard.d";
 
 export const ProductCard = ({
   name,
   price,
   image = ProductCardImage.src,
+  link = "",
 }: ProductCardProps) => {
   const formattedPrice = price.toLocaleString("en-US", {
     style: "currency",
@@ -15,7 +17,7 @@ export const ProductCard = ({
   });
 
   return (
-    <div className={styles["ProductCard"]}>
+    <Link href={link} className={styles["ProductCard"]}>
       <div className={styles["ProductCard__head"]}>
         <Image
           className={styles["ProductCard__image"]}
@@ -32,6 +34,6 @@ export const ProductCard = ({
         <h3 className={styles["ProductCard__name"]}>{name}</h3>
         <p className={styles["ProductCard__price"]}>{formattedPrice}</p>
       </div>
-    </div>
+    </Link>
   );
 };

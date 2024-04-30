@@ -6,6 +6,7 @@ query GetProductsByCollection($handle: String!) {
     products(first: 10) {
       nodes {
         id
+        handle
         title
         featuredImage {
           url

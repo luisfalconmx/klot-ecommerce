@@ -35,6 +35,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             name={i.title}
             price={i.priceRangeV2.minVariantPrice.amount}
             image={i.featuredImage?.url}
+            link={`/products/${i.handle}`}
           />
         ))}
       </div>

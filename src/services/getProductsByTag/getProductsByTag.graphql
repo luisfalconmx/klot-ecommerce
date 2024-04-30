@@ -1,6 +1,7 @@
 query GetProductsByTag($tag: String!) {
   products(first: 10, query: $tag) {
     nodes {
+      handle
       title
       featuredImage {
         url

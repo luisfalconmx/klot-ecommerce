@@ -32,10 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={GilroyFont.className}>
-        <Navbar />
-        {children}
-      </body>
+      <body className={GilroyFont.className}>{children}</body>
     </html>
   );
 }
