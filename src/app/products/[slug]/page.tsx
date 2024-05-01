@@ -26,6 +26,7 @@ interface FindVariantsByTermProps {
 
 export default async function Product({ params, searchParams }: ProductProps) {
   const data = await getProductBySlug(params.slug);
+  let selectedVariant;
 
   const getVariants = (term: string) => {
     if (data?.productByHandle?.variants) {
@@ -44,55 +45,40 @@ export default async function Product({ params, searchParams }: ProductProps) {
     }
   };
 
-  const findVariantsByTerm = ({
-    size = false,
-    color = false,
-  }: FindVariantsByTermProps) => {
-    const target = data?.productByHandle?.variants.nodes.find((variant) => {
-      const availableVariants = variant.selectedOptions.map((i) => {
-        return i.name.toLowerCase(), i.value.toLowerCase();
-      });
-
-      if (size && color) {
-        return (
-          availableVariants.includes(
-            searchParams.size?.toLowerCase() as string
-          ) &&
-          availableVariants.includes(
-            searchParams.color?.toLowerCase() as string
-          )
-        );
-      }
-
-      if (size) {
-        return availableVariants.includes(
-          searchParams.size?.toLowerCase() as string
-        );
-      }
-
-      if (color) {
-        return availableVariants.includes(
-          searchParams.color?.toLowerCase() as string
-        );
-      }
-
-      return false;
-    });
-
-    return target;
-  };
-
   const sizeVariants = getVariants("size").filter((i) => i !== "");
   const colorVariants = getVariants("color").filter((i) => i !== "");
 
-  let selectedVariant;
+  const variantFound = data?.productByHandle?.variants.nodes.find((variant) => {
+    const availableVariants = variant.selectedOptions.map((i) => {
+      return i.name.toLowerCase(), i.value.toLowerCase();
+    });
 
-  if (searchParams.color && searchParams.size) {
-    selectedVariant = findVariantsByTerm({ size: true, color: true });
-  } else if (searchParams.color) {
-    selectedVariant = findVariantsByTerm({ color: true });
-  } else if (searchParams.size) {
-    selectedVariant = findVariantsByTerm({ size: true });
+    if (searchParams.size && searchParams.color) {
+      return (
+        availableVariants.includes(
+          searchParams.size?.toLowerCase() as string
+        ) &&
+        availableVariants.includes(searchParams.color?.toLowerCase() as string)
+      );
+    }
+
+    if (searchParams.size) {
+      return availableVariants.includes(
+        searchParams.size?.toLowerCase() as string
+      );
+    }
+
+    if (searchParams.color) {
+      return availableVariants.includes(
+        searchParams.color?.toLowerCase() as string
+      );
+    }
+
+    return false;
+  });
+
+  if (variantFound) {
+    selectedVariant = variantFound;
   } else {
     selectedVariant = data?.productByHandle?.variants.nodes[0];
   }
@@ -104,9 +90,10 @@ export default async function Product({ params, searchParams }: ProductProps) {
   const defaultColor = selectedVariant?.selectedOptions.find(
     (i) => i.name.toLowerCase() === "color"
   );
-  let productImage = hasOnlyDefaultVariant
-    ? data.productByHandle?.featuredImage?.src
-    : selectedVariant?.image?.url;
+  let productImage = selectedVariant?.image?.url
+    ? selectedVariant?.image?.url
+    : data?.productByHandle?.featuredImage?.src;
+
   let title = data?.productByHandle?.title;
   let price = selectedVariant?.price || 0;
   let quantity = selectedVariant?.inventoryQuantity || 0;
