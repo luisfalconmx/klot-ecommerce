@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
-import IconArrowDown from "@/assets/icons/icon-arrow-down.svg";
 import { cn } from "@/utils";
+import IconArrowDown from "@/assets/icons/icon-arrow-down.svg";
+import IconX from "@/assets/icons/icon-x.svg";
+import IconCheck from "@/assets/icons/icon-check.svg";
 import type { SizeSelectorProps } from "./SizeSelector.d";
 
 export const SizeSelector = ({ sizes }: SizeSelectorProps) => {
@@ -36,7 +38,7 @@ export const SizeSelector = ({ sizes }: SizeSelectorProps) => {
       >
         <p className="font-bold">Size</p>
         <div className="flex items-center space-x-4">
-          <b className="w-6 text-center block">{selectedSize}</b>
+          <b className="w-6 text-center block uppercase">{selectedSize}</b>
           <Image src={IconArrowDown} alt="" width={24} height={24} />
         </div>
       </button>
@@ -55,9 +57,9 @@ export const SizeSelector = ({ sizes }: SizeSelectorProps) => {
             <b className="text-2xl mb-8">Size</b>
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute top-0 right-0 bottom-0 m-auto"
+              className="absolute -top-5 right-0 bottom-0 m-auto"
             >
-              x
+              <Image src={IconX} alt="" width={24} height={24} />
             </button>
           </div>
           <div className="flex flex-col space-y-3 max-h-[320px] overflow-y-auto pb-8">
@@ -66,13 +68,22 @@ export const SizeSelector = ({ sizes }: SizeSelectorProps) => {
                 key={i}
                 href={handleRedirect(i)}
                 className={cn(
-                  "block w-full bg-pearl text-black px-8 py-5 rounded-full uppercase font-bold",
+                  "flex justify-between w-full bg-pearl text-black px-8 py-5 rounded-full uppercase font-bold",
                   {
                     "bg-primary text-white": i.toLowerCase() === selectedSize,
                   }
                 )}
               >
                 {i}
+                <Image
+                  src={IconCheck}
+                  alt=""
+                  width={24}
+                  height={24}
+                  className={cn("hidden", {
+                    "block cursor-default": i.toLowerCase() === selectedSize,
+                  })}
+                />
               </Link>
             ))}
           </div>
