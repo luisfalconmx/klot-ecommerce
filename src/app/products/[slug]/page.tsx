@@ -1,13 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getProductBySlug } from "@/services";
-import { removeDuplicates } from "@/utils";
-import { SizeSelector, ColorSelector } from "@/components";
-import IconArrowDown from "@/assets/icons/icon-arrow-down.svg";
+import { removeDuplicates, formatCurrency } from "@/utils";
+import { SizeSelector, ColorSelector, QuantitySelector } from "@/components";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
 import IconFav from "@/assets/icons/icon-fav.svg";
-import IconPlus from "@/assets/icons/icon-plus.svg";
-import IconMinus from "@/assets/icons/icon-minus.svg";
 
 interface ProductProps {
   params: {
@@ -17,11 +14,6 @@ interface ProductProps {
     size?: string;
     color?: string;
   };
-}
-
-interface FindVariantsByTermProps {
-  size?: boolean;
-  color?: boolean;
 }
 
 export default async function Product({ params, searchParams }: ProductProps) {
@@ -96,7 +88,7 @@ export default async function Product({ params, searchParams }: ProductProps) {
 
   let title = data?.productByHandle?.title;
   let price = selectedVariant?.price || 0;
-  let quantity = selectedVariant?.inventoryQuantity || 0;
+  let availableStock = selectedVariant?.inventoryQuantity || 0;
 
   return (
     <main className="mt-6 mb-24">
@@ -126,8 +118,10 @@ export default async function Product({ params, searchParams }: ProductProps) {
       <section className="mx-6">
         <h1 className="font-bold text-2xl mb-4">{title}</h1>
         <div className="flex items-center space-x-2 mb-6">
-          <b className="font-bold text-2xl text-primary  block">${price}</b>
-          {quantity <= 0 && (
+          <b className="font-bold text-2xl text-primary  block">
+            {formatCurrency(price)}
+          </b>
+          {availableStock <= 0 && (
             <span className="text-red-500 font-bold text-xl">
               - out of stock
             </span>
@@ -149,39 +143,11 @@ export default async function Product({ params, searchParams }: ProductProps) {
           />
         )}
 
-        <div className="flex justify-between bg-pearl rounded-full py-4 px-6 items-center text-left gap-x-4">
-          <p className="font-bold">Quantity</p>
-          <div className="flex items-center space-x-2">
-            <button
-              className="bg-primary disabled:bg-gray-300 p-1 rounded-full"
-              disabled={quantity <= 0}
-            >
-              <Image src={IconMinus} alt="" width={24} height={24} />
-            </button>
-            <input
-              type="number"
-              defaultValue={quantity ? 1 : 0}
-              min={1}
-              max={quantity}
-              step={1}
-              className="text-center text-xl appearance-none bg-transparent font-bold"
-              disabled
-            />
-            <button
-              className="bg-primary p-1 rounded-full disabled:bg-gray-300"
-              disabled={quantity <= 0}
-            >
-              <Image src={IconPlus} alt="" width={24} height={24} />
-            </button>
-          </div>
-        </div>
-        <button
-          className="bg-primary flex justify-between px-6 items-center text-white rounded-full py-4 disabled:bg-pearl disabled:text-neutral-400"
-          disabled={quantity <= 0}
-        >
-          <span className="font-bold">${price}</span>
-          <span className="">Add to bag</span>
-        </button>
+        <QuantitySelector
+          defaultQuantity={availableStock ? 1 : 0}
+          availableStock={availableStock}
+          unitariePrice={price}
+        />
       </section>
 
       <section className="mx-6 mb-12">

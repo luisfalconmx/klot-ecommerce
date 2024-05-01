@@ -5,6 +5,7 @@ import { ProductCard } from "./ProductCard/ProductCard";
 import { CartCard } from "./CartCard/CartCard";
 import { SizeSelector } from "./SizeSelector/SizeSelector";
 import { ColorSelector } from "./ColorSelector/ColorSelector";
+import { QuantitySelector } from "./QuantitySelector/QuantitySelector";
 
 export {
   Navbar,
@@ -14,4 +15,5 @@ export {
   CartCard,
   SizeSelector,
   ColorSelector,
+  QuantitySelector,
 };
