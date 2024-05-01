@@ -1,4 +1,5 @@
 import { getProductBySlug } from "@/services";
+import { SizeSelector } from "@/components";
 import Image from "next/image";
 import Link from "next/link";
 import IconArrowDown from "@/assets/icons/icon-arrow-down.svg";
@@ -106,13 +107,7 @@ export default async function Product({ params, searchParams }: ProductProps) {
 
       <section className="mx-6 mb-8 flex flex-col space-y-4">
         {!hasOnlyDefaultVariant && (
-          <button className="flex justify-between bg-pearl rounded-full py-4 px-6 items-center text-left gap-x-4">
-            <p className="font-bold">Size</p>
-            <div className="flex items-center space-x-4">
-              <b className="w-6 text-center block">S</b>
-              <Image src={IconArrowDown} alt="" width={24} height={24} />
-            </div>
-          </button>
+          <SizeSelector sizes={["s", "m", "l", "xl", "2xl"]} />
         )}
 
         {!hasOnlyDefaultVariant && (
