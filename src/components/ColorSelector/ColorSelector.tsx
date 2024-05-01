@@ -10,12 +10,13 @@ import IconX from "@/assets/icons/icon-x.svg";
 import IconCheck from "@/assets/icons/icon-check.svg";
 import type { ColorSelectorProps } from "./ColorSelector.d";
 
-export const ColorSelector = ({ colors }: ColorSelectorProps) => {
+export const ColorSelector = ({ defaultValue, colors }: ColorSelectorProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const location = usePathname();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
-  const selectedColor = searchParams.get("color")?.toLowerCase();
+  const selectedColor =
+    searchParams.get("color")?.toLowerCase() || defaultValue;
 
   const handleRedirect = (value: string) => {
     params.set("color", value);

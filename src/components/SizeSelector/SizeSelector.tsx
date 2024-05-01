@@ -10,12 +10,12 @@ import IconX from "@/assets/icons/icon-x.svg";
 import IconCheck from "@/assets/icons/icon-check.svg";
 import type { SizeSelectorProps } from "./SizeSelector.d";
 
-export const SizeSelector = ({ sizes }: SizeSelectorProps) => {
+export const SizeSelector = ({ defaultValue, sizes }: SizeSelectorProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const location = usePathname();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
-  const selectedSize = searchParams.get("size")?.toLowerCase();
+  const selectedSize = searchParams.get("size")?.toLowerCase() || defaultValue;
 
   const handleRedirect = (value: string) => {
     params.set("size", value);

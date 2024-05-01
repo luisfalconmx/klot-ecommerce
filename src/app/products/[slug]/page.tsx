@@ -64,7 +64,7 @@ export default async function Product({ params, searchParams }: ProductProps) {
     ? data.productByHandle?.featuredImage?.src
     : selectedVariant?.image?.url;
   let title = data?.productByHandle?.title;
-  let price = selectedVariant?.price;
+  let price = selectedVariant?.price || 0;
   let quantity = selectedVariant?.inventoryQuantity || 0;
 
   return (
@@ -106,11 +106,12 @@ export default async function Product({ params, searchParams }: ProductProps) {
 
       <section className="mx-6 mb-8 flex flex-col space-y-4">
         {!hasOnlyDefaultVariant && (
-          <SizeSelector sizes={["s", "m", "l", "xl", "2xl"]} />
+          <SizeSelector defaultValue="m" sizes={["s", "m", "l", "xl", "2xl"]} />
         )}
 
         {!hasOnlyDefaultVariant && (
           <ColorSelector
+            defaultValue="orange"
             colors={["orange", "black", "red", "yellow", "blue"]}
           />
         )}
