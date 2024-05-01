@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getProductBySlug } from "@/services";
+import { removeDuplicates } from "@/utils";
 import { SizeSelector, ColorSelector } from "@/components";
 import IconArrowDown from "@/assets/icons/icon-arrow-down.svg";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
@@ -20,6 +21,26 @@ interface ProductProps {
 
 export default async function Product({ params, searchParams }: ProductProps) {
   const data = await getProductBySlug(params.slug);
+
+  const getVariants = (term: string) => {
+    if (data?.productByHandle?.variants) {
+      const allVariants = data.productByHandle.variants.nodes.map((i) => {
+        const target = i.selectedOptions.find(
+          (i) => i.name.toLowerCase() === term
+        );
+
+        if (target) return target.value;
+        return "";
+      });
+
+      return removeDuplicates(allVariants);
+    } else {
+      return [];
+    }
+  };
+
+  const sizeVariants = getVariants("size");
+  const colorVariants = getVariants("color");
 
   let selectedVariant;
 
@@ -60,6 +81,12 @@ export default async function Product({ params, searchParams }: ProductProps) {
   }
 
   const hasOnlyDefaultVariant = data?.productByHandle?.hasOnlyDefaultVariant;
+  const defaultSize = selectedVariant?.selectedOptions.find(
+    (i) => i.name.toLowerCase() === "size"
+  );
+  const defaultColor = selectedVariant?.selectedOptions.find(
+    (i) => i.name.toLowerCase() === "color"
+  );
   let productImage = hasOnlyDefaultVariant
     ? data.productByHandle?.featuredImage?.src
     : selectedVariant?.image?.url;
@@ -105,14 +132,16 @@ export default async function Product({ params, searchParams }: ProductProps) {
       </section>
 
       <section className="mx-6 mb-8 flex flex-col space-y-4">
-        {!hasOnlyDefaultVariant && (
-          <SizeSelector defaultValue="m" sizes={["s", "m", "l", "xl", "2xl"]} />
+        {!hasOnlyDefaultVariant && sizeVariants.length > 0 && (
+          <SizeSelector
+            defaultValue={defaultSize?.value || ""}
+            sizes={sizeVariants}
+          />
         )}
-
-        {!hasOnlyDefaultVariant && (
+        {!hasOnlyDefaultVariant && colorVariants.length > 0 && (
           <ColorSelector
-            defaultValue="orange"
-            colors={["orange", "black", "red", "yellow", "blue"]}
+            defaultValue={defaultColor?.value || ""}
+            colors={colorVariants}
           />
         )}
 
@@ -142,7 +171,6 @@ export default async function Product({ params, searchParams }: ProductProps) {
             </button>
           </div>
         </div>
-
         <button
           className="bg-primary flex justify-between px-6 items-center text-white rounded-full py-4 disabled:bg-pearl disabled:text-neutral-400"
           disabled={quantity <= 0}

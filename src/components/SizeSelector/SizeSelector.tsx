@@ -15,10 +15,11 @@ export const SizeSelector = ({ defaultValue, sizes }: SizeSelectorProps) => {
   const location = usePathname();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
-  const selectedSize = searchParams.get("size")?.toLowerCase() || defaultValue;
+  const selectedSize =
+    searchParams.get("size")?.toLowerCase() || defaultValue.toLowerCase();
 
   const handleRedirect = (value: string) => {
-    params.set("size", value);
+    params.set("size", value.toLowerCase());
     return `${location}?${params.toString()}`;
   };
 

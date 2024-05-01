@@ -16,10 +16,10 @@ export const ColorSelector = ({ defaultValue, colors }: ColorSelectorProps) => {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const selectedColor =
-    searchParams.get("color")?.toLowerCase() || defaultValue;
+    searchParams.get("color")?.toLowerCase() || defaultValue.toLowerCase();
 
   const handleRedirect = (value: string) => {
-    params.set("color", value);
+    params.set("color", value.toLowerCase());
     return `${location}?${params.toString()}`;
   };
 
@@ -58,7 +58,7 @@ export const ColorSelector = ({ defaultValue, colors }: ColorSelectorProps) => {
       >
         <section className="bg-white px-6 pt-4 rounded-t-2xl">
           <div className="flex relative justify-center items-center">
-            <b className="text-2xl mb-8">Size</b>
+            <b className="text-2xl mb-8">Color</b>
             <button
               onClick={() => setIsOpen(false)}
               className="absolute -top-5 right-0 bottom-0 m-auto"
