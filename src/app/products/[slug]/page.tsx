@@ -19,6 +19,11 @@ interface ProductProps {
   };
 }
 
+interface FindVariantsByTermProps {
+  size?: boolean;
+  color?: boolean;
+}
+
 export default async function Product({ params, searchParams }: ProductProps) {
   const data = await getProductBySlug(params.slug);
 
@@ -39,43 +44,55 @@ export default async function Product({ params, searchParams }: ProductProps) {
     }
   };
 
-  const sizeVariants = getVariants("size");
-  const colorVariants = getVariants("color");
+  const findVariantsByTerm = ({
+    size = false,
+    color = false,
+  }: FindVariantsByTermProps) => {
+    const target = data?.productByHandle?.variants.nodes.find((variant) => {
+      const availableVariants = variant.selectedOptions.map((i) => {
+        return i.name.toLowerCase(), i.value.toLowerCase();
+      });
+
+      if (size && color) {
+        return (
+          availableVariants.includes(
+            searchParams.size?.toLowerCase() as string
+          ) &&
+          availableVariants.includes(
+            searchParams.color?.toLowerCase() as string
+          )
+        );
+      }
+
+      if (size) {
+        return availableVariants.includes(
+          searchParams.size?.toLowerCase() as string
+        );
+      }
+
+      if (color) {
+        return availableVariants.includes(
+          searchParams.color?.toLowerCase() as string
+        );
+      }
+
+      return false;
+    });
+
+    return target;
+  };
+
+  const sizeVariants = getVariants("size").filter((i) => i !== "");
+  const colorVariants = getVariants("color").filter((i) => i !== "");
 
   let selectedVariant;
 
   if (searchParams.color && searchParams.size) {
-    // const tempSelectedVariant = data?.productByHandle?.variants.nodes.find(
-    //   (i) => {
-    //     const matchColor = i.selectedOptions[0].value
-    //       .toLowerCase()
-    //       .includes(searchParams.color || "");
-    //     const matchSize = i.selectedOptions[0].value
-    //       .toLowerCase()
-    //       .includes(searchParams.color || "");
-    //     return matchColor && matchSize;
-    //   }
-    // );
-    // if (!tempSelectedVariant) return notFound();
-    // selectedVariant = tempSelectedVariant;
+    selectedVariant = findVariantsByTerm({ size: true, color: true });
   } else if (searchParams.color) {
-    // const tempSelectedVariant = data?.productByHandle?.variants.nodes.find(
-    //   (i) =>
-    //     i.selectedOptions[0].value
-    //       .toLowerCase()
-    //       .includes(searchParams.color || "")
-    // );
-    // if (!tempSelectedVariant) return notFound();
-    // selectedVariant = tempSelectedVariant;
+    selectedVariant = findVariantsByTerm({ color: true });
   } else if (searchParams.size) {
-    // const tempSelectedVariant = data?.productByHandle?.variants.nodes.find(
-    //   (i) =>
-    //     i.selectedOptions[0].value
-    //       .toLowerCase()
-    //       .includes(searchParams.size || "")
-    // );
-    // if (!tempSelectedVariant) return notFound();
-    // selectedVariant = tempSelectedVariant;
+    selectedVariant = findVariantsByTerm({ size: true });
   } else {
     selectedVariant = data?.productByHandle?.variants.nodes[0];
   }
