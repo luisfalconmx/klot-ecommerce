@@ -1,13 +1,12 @@
-import { getProductBySlug } from "@/services";
-import { SizeSelector } from "@/components";
 import Image from "next/image";
 import Link from "next/link";
+import { getProductBySlug } from "@/services";
+import { SizeSelector, ColorSelector } from "@/components";
 import IconArrowDown from "@/assets/icons/icon-arrow-down.svg";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
 import IconFav from "@/assets/icons/icon-fav.svg";
 import IconPlus from "@/assets/icons/icon-plus.svg";
 import IconMinus from "@/assets/icons/icon-minus.svg";
-import { notFound } from "next/navigation";
 
 interface ProductProps {
   params: {
@@ -111,13 +110,9 @@ export default async function Product({ params, searchParams }: ProductProps) {
         )}
 
         {!hasOnlyDefaultVariant && (
-          <button className="flex justify-between bg-pearl rounded-full py-4 px-6 items-center text-left gap-x-4">
-            <p className="font-bold">Color</p>
-            <div className="flex items-center space-x-4">
-              <div className="bg-green-600 w-6 h-6 rounded-full" />
-              <Image src={IconArrowDown} alt="" width={24} height={24} />
-            </div>
-          </button>
+          <ColorSelector
+            colors={["orange", "black", "red", "yellow", "blue"]}
+          />
         )}
 
         <div className="flex justify-between bg-pearl rounded-full py-4 px-6 items-center text-left gap-x-4">
