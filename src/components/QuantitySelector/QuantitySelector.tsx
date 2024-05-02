@@ -6,14 +6,17 @@ import IconPlus from "@/assets/icons/icon-plus.svg";
 import IconMinus from "@/assets/icons/icon-minus.svg";
 import { formatCurrency } from "@/utils";
 import type { QuantitySelectorProps } from "./QuantitySelector.d";
+import { useBagStore } from "@/stores/bagStore";
 
 export const QuantitySelector = ({
+  merchandiseId,
   defaultQuantity = 0,
   availableStock,
   unitariePrice,
 }: QuantitySelectorProps) => {
   const [quantity, setQuantity] = useState<number>(defaultQuantity);
   const total = formatCurrency(quantity * unitariePrice);
+  const { addProduct } = useBagStore();
 
   const handleDelete = () => {
     if (quantity > 1) {
@@ -25,6 +28,13 @@ export const QuantitySelector = ({
     if (quantity < availableStock) {
       setQuantity(quantity + 1);
     }
+  };
+
+  const handleAddToBag = () => {
+    addProduct({
+      merchandiseId,
+      quantity,
+    });
   };
 
   return (
@@ -60,6 +70,7 @@ export const QuantitySelector = ({
       <button
         className="bg-primary flex justify-between px-6 items-center text-white rounded-full py-4 disabled:bg-pearl disabled:text-neutral-400"
         disabled={availableStock <= 0}
+        onClick={handleAddToBag}
       >
         <span className="font-bold">{total}</span>
         <span className="">Add to bag</span>

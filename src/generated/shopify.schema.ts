@@ -45375,7 +45375,10 @@ export type Shop = HasMetafields & HasPublishedTranslations & Node & {
   __typename?: 'Shop';
   /** A list of the shop's active alert messages that appear in the Shopify admin. */
   alerts: Array<ShopAlert>;
-  /** A list of the shop's product categories. Limit: 1000 product categories. */
+  /**
+   * A list of the shop's product categories. Limit: 1000 product categories.
+   * @deprecated Deprecated in API version 2024-07. Use `all_product_categories_list` instead.
+   */
   allProductCategories: Array<ProductCategory>;
   /**
    * The token required to query the shop's reports or dashboards.
@@ -52660,7 +52663,7 @@ export type GetProductBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'QueryRoot', productByHandle?: { __typename?: 'Product', title: string, description: string, hasOnlyDefaultVariant: boolean, variants: { __typename?: 'ProductVariantConnection', nodes: Array<{ __typename?: 'ProductVariant', displayName: string, availableForSale: boolean, price: any, inventoryQuantity?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, image?: { __typename?: 'Image', url: any } | null }> }, images: { __typename?: 'ImageConnection', nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null }> }, featuredImage?: { __typename?: 'Image', src: any } | null } | null };
+export type GetProductBySlugQuery = { __typename?: 'QueryRoot', productByHandle?: { __typename?: 'Product', id: string, title: string, description: string, hasOnlyDefaultVariant: boolean, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } }, variants: { __typename?: 'ProductVariantConnection', nodes: Array<{ __typename?: 'ProductVariant', id: string, displayName: string, availableForSale: boolean, price: any, inventoryQuantity?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, image?: { __typename?: 'Image', url: any } | null }> }, images: { __typename?: 'ImageConnection', nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null }> }, featuredImage?: { __typename?: 'Image', src: any } | null } | null };
 
 export type GetProductsByCollectionQueryVariables = Exact<{
   handle: Scalars['String']['input'];
@@ -52728,11 +52731,18 @@ export type GetCollectionsQueryResult = Apollo.QueryResult<GetCollectionsQuery, 
 export const GetProductBySlugDocument = gql`
     query GetProductBySlug($slug: String!) {
   productByHandle(handle: $slug) {
+    id
     title
     description
     hasOnlyDefaultVariant
+    priceRangeV2 {
+      minVariantPrice {
+        amount
+      }
+    }
     variants(first: 10) {
       nodes {
+        id
         displayName
         availableForSale
         price

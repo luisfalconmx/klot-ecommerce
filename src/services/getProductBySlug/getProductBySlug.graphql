@@ -1,10 +1,17 @@
 query GetProductBySlug($slug: String!) {
   productByHandle(handle: $slug) {
+    id
     title
     description
     hasOnlyDefaultVariant
+    priceRangeV2 {
+      minVariantPrice {
+        amount
+      }
+    }
     variants(first: 10) {
       nodes {
+        id
         displayName
         availableForSale
         price

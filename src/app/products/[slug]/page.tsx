@@ -76,6 +76,7 @@ export default async function Product({ params, searchParams }: ProductProps) {
   }
 
   const hasOnlyDefaultVariant = data?.productByHandle?.hasOnlyDefaultVariant;
+  const merchandiseId = selectedVariant?.id as string;
   const defaultSize = selectedVariant?.selectedOptions.find(
     (i) => i.name.toLowerCase() === "size"
   );
@@ -144,6 +145,7 @@ export default async function Product({ params, searchParams }: ProductProps) {
         )}
 
         <QuantitySelector
+          merchandiseId={merchandiseId}
           defaultQuantity={availableStock ? 1 : 0}
           availableStock={availableStock}
           unitariePrice={price}
