@@ -56,7 +56,7 @@ export const ColorSelector = ({ defaultValue, colors }: ColorSelectorProps) => {
           }
         )}
       >
-        <section className="bg-white px-6 pt-4 rounded-t-2xl">
+        <section className="bg-white px-6 pt-4 rounded-t-2xl min-h-[400px]">
           <div className="flex relative justify-center items-center">
             <b className="text-2xl mb-8">Color</b>
             <button

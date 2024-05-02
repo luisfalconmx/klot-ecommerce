@@ -53,7 +53,7 @@ export const SizeSelector = ({ defaultValue, sizes }: SizeSelectorProps) => {
           }
         )}
       >
-        <section className="bg-white px-6 pt-4 rounded-t-2xl">
+        <section className="bg-white px-6 pt-4 rounded-t-2xl min-h-[300px]">
           <div className="flex relative justify-center items-center">
             <b className="text-2xl mb-8">Size</b>
             <button

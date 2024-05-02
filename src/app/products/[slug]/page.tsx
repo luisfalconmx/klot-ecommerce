@@ -105,13 +105,13 @@ export default async function Product({ params, searchParams }: ProductProps) {
         </button>
       </section>
 
-      <section className="ml-6 mb-6 flex flex-nowrap overflow-auto space-x-2">
+      <section className="mx-6 mb-6 flex flex-nowrap overflow-auto space-x-2">
         <Image
           src={productImage}
           alt={title || ""}
-          width={300}
+          width={400}
           height={400}
-          className="rounded-lg h-[300px] object-cover object-top"
+          className="rounded-lg h-[320px] object-cover object-top w-full"
         />
       </section>
 
