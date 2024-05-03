@@ -3,4 +3,5 @@ export interface ProductCardProps {
   price: number;
   image?: string;
   link?: string;
+  merchandiseId: string;
 }

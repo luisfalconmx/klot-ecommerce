@@ -66,40 +66,9 @@ export default async function Home() {
                 price={i.priceRangeV2.minVariantPrice.amount}
                 image={i.featuredImage?.url}
                 link={`/products/${i.handle}`}
+                merchandiseId={i.id}
               />
             ))}
-          </div>
-        </section>
-
-        <section className="ml-6 mb-8">
-          <div className="flex justify-between items-center mb-4 mr-6">
-            <h2 className="text-lg text-primary-100 font-bold">Seasonal</h2>
-            <Link href="#" className="font-medium underline">
-              See all
-            </Link>
-          </div>
-          <div className="flex space-x-4 flex-nowrap w-fit max-w-full overflow-x-auto pr-6 pb-2">
-            <ProductCard name="Men's Harrington Jacket" price={148} />
-            <ProductCard name="Men's Harrington Jacket" price={148} />
-            <ProductCard name="Men's Harrington Jacket" price={148} />
-            <ProductCard name="Men's Harrington Jacket" price={148} />
-          </div>
-        </section>
-
-        <section className="ml-6 mb-8">
-          <div className="flex justify-between items-center mb-4 mr-6">
-            <h2 className="text-lg text-primary-100 font-bold">
-              Limited Editions
-            </h2>
-            <Link href="#" className="font-medium underline">
-              See all
-            </Link>
-          </div>
-          <div className="flex space-x-4 flex-nowrap w-fit max-w-full overflow-x-auto pr-6 pb-2">
-            <ProductCard name="Men's Harrington Jacket" price={148} />
-            <ProductCard name="Men's Harrington Jacket" price={148} />
-            <ProductCard name="Men's Harrington Jacket" price={148} />
-            <ProductCard name="Men's Harrington Jacket" price={148} />
           </div>
         </section>
       </main>

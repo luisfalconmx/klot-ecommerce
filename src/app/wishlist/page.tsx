@@ -1,9 +1,14 @@
+"use client";
+
 import { ProductCard } from "@/components";
 import Link from "next/link";
 import Image from "next/image";
+import { useWishlistStore } from "@/stores/useWishlistStore";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
 
-export default function WishList() {
+export default function WishListPage() {
+  const { products } = useWishlistStore();
+
   return (
     <main className="mt-12 mb-24">
       <section className="grid grid-cols-[48px_1fr_48px] items-center mx-6 mb-8">
@@ -18,13 +23,17 @@ export default function WishList() {
         </h1>
       </section>
       <section className="grid grid-cols-2 gap-4 mx-6">
-        <ProductCard name="Hoodie" price={100} />
-        <ProductCard name="Hoodie" price={100} />
-        <ProductCard name="Hoodie" price={100} />
-        <ProductCard name="Hoodie" price={100} />
-        <ProductCard name="Hoodie" price={100} />
-        <ProductCard name="Hoodie" price={100} />
-        <ProductCard name="Hoodie" price={100} />
+        {products.map((i) => (
+          <ProductCard
+            key={i.merchandiseId}
+            name={i.name}
+            price={i.price}
+            image={i.image}
+            link={i.link}
+            merchandiseId={i.merchandiseId}
+            enableAddToWishlist
+          />
+        ))}
       </section>
     </main>
   );

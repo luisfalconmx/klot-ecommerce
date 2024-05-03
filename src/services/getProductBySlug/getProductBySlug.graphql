@@ -2,6 +2,7 @@ query GetProductBySlug($slug: String!) {
   productByHandle(handle: $slug) {
     id
     title
+    handle
     description
     hasOnlyDefaultVariant
     priceRangeV2 {

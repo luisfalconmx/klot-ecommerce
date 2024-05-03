@@ -1,8 +1,9 @@
 import Image from "next/image";
 import styles from "./ProductCard.module.css";
-import IconFav from "@/assets/icons/icon-fav.svg";
 import ProductCardImage from "@/assets/images/product-card-image.jpg";
 import Link from "next/link";
+import { Wishlist } from "@/components";
+import { formatCurrency } from "@/utils";
 import type { ProductCardProps } from "./ProductCard.d";
 
 export const ProductCard = ({
@@ -10,30 +11,34 @@ export const ProductCard = ({
   price,
   image = ProductCardImage.src,
   link = "",
+  merchandiseId,
 }: ProductCardProps) => {
-  const formattedPrice = price.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-
   return (
-    <Link href={link} className={styles["ProductCard"]}>
-      <div className={styles["ProductCard__head"]}>
-        <Image
-          className={styles["ProductCard__image"]}
-          src={image}
-          alt=""
-          width={160}
-          height={220}
-        />
-        <button className={styles["ProductCard__button"]}>
-          <Image src={IconFav} alt={name} width={24} height={24} />
-        </button>
-      </div>
-      <div className={styles["ProductCard__content"]}>
-        <h3 className={styles["ProductCard__name"]}>{name}</h3>
-        <p className={styles["ProductCard__price"]}>{formattedPrice}</p>
-      </div>
-    </Link>
+    <article className={styles["ProductCard"]}>
+      <Wishlist
+        name={name}
+        image={image}
+        price={price}
+        link={link}
+        merchandiseId={merchandiseId}
+      />
+      <Link href={link}>
+        <div className={styles["ProductCard__head"]}>
+          <Image
+            className={styles["ProductCard__image"]}
+            src={image}
+            alt=""
+            width={160}
+            height={220}
+          />
+        </div>
+        <div className={styles["ProductCard__content"]}>
+          <h3 className={styles["ProductCard__name"]}>{name}</h3>
+          <p className={styles["ProductCard__price"]}>
+            {formatCurrency(price)}
+          </p>
+        </div>
+      </Link>
+    </article>
   );
 };

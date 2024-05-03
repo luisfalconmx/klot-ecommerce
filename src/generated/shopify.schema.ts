@@ -52663,7 +52663,7 @@ export type GetProductBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetProductBySlugQuery = { __typename?: 'QueryRoot', productByHandle?: { __typename?: 'Product', id: string, title: string, description: string, hasOnlyDefaultVariant: boolean, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } }, variants: { __typename?: 'ProductVariantConnection', nodes: Array<{ __typename?: 'ProductVariant', id: string, displayName: string, availableForSale: boolean, price: any, inventoryQuantity?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, image?: { __typename?: 'Image', url: any } | null }> }, images: { __typename?: 'ImageConnection', nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null }> }, featuredImage?: { __typename?: 'Image', src: any } | null } | null };
+export type GetProductBySlugQuery = { __typename?: 'QueryRoot', productByHandle?: { __typename?: 'Product', id: string, title: string, handle: string, description: string, hasOnlyDefaultVariant: boolean, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } }, variants: { __typename?: 'ProductVariantConnection', nodes: Array<{ __typename?: 'ProductVariant', id: string, displayName: string, availableForSale: boolean, price: any, inventoryQuantity?: number | null, selectedOptions: Array<{ __typename?: 'SelectedOption', name: string, value: string }>, image?: { __typename?: 'Image', url: any } | null }> }, images: { __typename?: 'ImageConnection', nodes: Array<{ __typename?: 'Image', url: any, altText?: string | null }> }, featuredImage?: { __typename?: 'Image', src: any } | null } | null };
 
 export type GetProductsByCollectionQueryVariables = Exact<{
   handle: Scalars['String']['input'];
@@ -52677,7 +52677,7 @@ export type GetProductsByTagQueryVariables = Exact<{
 }>;
 
 
-export type GetProductsByTagQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', handle: string, title: string, featuredImage?: { __typename?: 'Image', url: any } | null, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } } }> } };
+export type GetProductsByTagQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, handle: string, title: string, featuredImage?: { __typename?: 'Image', url: any } | null, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } } }> } };
 
 
 export const GetCollectionsDocument = gql`
@@ -52733,6 +52733,7 @@ export const GetProductBySlugDocument = gql`
   productByHandle(handle: $slug) {
     id
     title
+    handle
     description
     hasOnlyDefaultVariant
     priceRangeV2 {
@@ -52862,6 +52863,7 @@ export const GetProductsByTagDocument = gql`
     query GetProductsByTag($tag: String!) {
   products(first: 10, query: $tag) {
     nodes {
+      id
       handle
       title
       featuredImage {

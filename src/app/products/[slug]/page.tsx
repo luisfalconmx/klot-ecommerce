@@ -2,7 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { getProductBySlug } from "@/services";
 import { removeDuplicates, formatCurrency } from "@/utils";
-import { SizeSelector, ColorSelector, QuantitySelector } from "@/components";
+import {
+  SizeSelector,
+  ColorSelector,
+  QuantitySelector,
+  Wishlist,
+} from "@/components";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
 import IconFav from "@/assets/icons/icon-fav.svg";
 
@@ -93,17 +98,21 @@ export default async function Product({ params, searchParams }: ProductProps) {
 
   return (
     <main className="mt-6 mb-24">
-      <section className="mx-6 flex justify-between mb-8">
+      <section className="mx-6 flex justify-between mb-8 relative">
         <Link
-          href="/categories"
+          href="/"
           className="p-3 bg-pearl rounded-full cursor-pointer  block w-fit"
         >
           <Image src={IconArrowLeft} alt="" width={24} height={24} />
         </Link>
 
-        <button className="p-3 bg-pearl rounded-full cursor-pointer block w-fit">
-          <Image src={IconFav} alt="" width={24} height={24} />
-        </button>
+        <Wishlist
+          image={productImage}
+          name={title as string}
+          price={price}
+          merchandiseId={data?.productByHandle?.id as string}
+          link={`/products/${data?.productByHandle?.handle}`}
+        />
       </section>
 
       <section className="mx-6 mb-6 flex flex-nowrap overflow-auto space-x-2">
