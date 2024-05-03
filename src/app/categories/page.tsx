@@ -10,16 +10,17 @@ export default async function Categories() {
 
   return (
     <main className="mt-12 mb-28 mx-6">
-      <Link
-        href="/"
-        className="p-3 bg-pearl rounded-full cursor-pointer mb-4 block w-fit"
-      >
-        <Image src={IconArrowLeft} alt="" width={24} height={24} />
-      </Link>
-
-      <h1 className="text-xl text-primary-100 font-bold mb-6">
-        Shop by Categories
-      </h1>
+      <section className="grid grid-cols-[48px_1fr_48px] items-center mb-8">
+        <Link
+          href="/"
+          className="p-3 bg-pearl rounded-full cursor-pointer block w-fit"
+        >
+          <Image src={IconArrowLeft} alt="" width={24} height={24} />
+        </Link>
+        <h1 className="block text-center text-2xl text-primary-100 font-bold">
+          Categories
+        </h1>
+      </section>
 
       <div className="flex flex-col space-y-3">
         {data?.collections.edges.map((i) => (

@@ -17,16 +17,17 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <main className="mt-12 mb-24 mx-6">
-      <Link
-        href="/categories"
-        className="p-3 bg-pearl rounded-full cursor-pointer mb-4 block w-fit"
-      >
-        <Image src={IconArrowLeft} alt="" width={24} height={24} />
-      </Link>
-
-      <h1 className="text-xl text-primary-100 font-bold mb-6 first-letter:uppercase">
-        {title} ({total})
-      </h1>
+      <section className="grid grid-cols-[48px_1fr_48px] items-center mb-8">
+        <Link
+          href="/categories"
+          className="p-3 bg-pearl rounded-full cursor-pointer block w-fit"
+        >
+          <Image src={IconArrowLeft} alt="" width={24} height={24} />
+        </Link>
+        <h1 className="block text-center text-2xl text-primary-100 font-bold capitalize">
+          {title} ({total})
+        </h1>
+      </section>
 
       <div className="grid grid-cols-2 gap-4">
         {data?.collectionByHandle?.products.nodes.map((i) => (
