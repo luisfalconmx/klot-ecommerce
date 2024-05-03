@@ -1,5 +1,10 @@
 export interface CartCardProps {
   name: string;
-  price: number;
+  availableStock: number;
+  defaultQuantity: number;
+  unitaryPrice: number;
+  merchandiseId: string;
   image?: string;
+  size?: string;
+  color?: string;
 }

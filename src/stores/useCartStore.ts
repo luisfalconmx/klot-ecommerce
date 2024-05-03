@@ -2,27 +2,33 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 type Product = {
+  name: string;
+  unitaryPrice: number;
   merchandiseId: string;
+  availableStock: number;
   quantity: number;
+  image: string;
+  size?: string;
+  color?: string;
 };
 
-type BagState = {
+type CartState = {
   products: Product[];
 };
 
-type BagActions = {
+type CartActions = {
   addProduct: ({ quantity, merchandiseId }: Product) => void;
-  deleteProduct: ({ quantity, merchandiseId }: Product) => void;
+  deleteProduct: (merchandiseId: string) => void;
 };
 
-type BagStore = BagState & BagActions;
+type CartStore = CartState & CartActions;
 
-const defaultInitState: BagState = {
+const defaultInitState: CartState = {
   products: [],
 };
 
 export const useBagStore = create(
-  persist<BagStore>(
+  persist<CartStore>(
     (set) => ({
       ...defaultInitState,
       addProduct: (product) => {
@@ -47,10 +53,10 @@ export const useBagStore = create(
         });
       },
       updateProduct: () => {},
-      deleteProduct: (product) => {
+      deleteProduct: (merchandiseId) => {
         set((state) => {
           const listOfProducts = state.products.filter(
-            (i) => i.merchandiseId !== product.merchandiseId
+            (i) => i.merchandiseId !== merchandiseId
           );
 
           return {
@@ -60,7 +66,7 @@ export const useBagStore = create(
       },
     }),
     {
-      name: "klot-bag-store",
+      name: "klot-cart-store",
       storage: createJSONStorage(() => localStorage),
     }
   )

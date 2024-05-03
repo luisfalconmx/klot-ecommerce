@@ -6,16 +6,20 @@ import IconPlus from "@/assets/icons/icon-plus.svg";
 import IconMinus from "@/assets/icons/icon-minus.svg";
 import { formatCurrency } from "@/utils";
 import type { QuantitySelectorProps } from "./QuantitySelector.d";
-import { useBagStore } from "@/stores/bagStore";
+import { useBagStore } from "@/stores/useCartStore";
 
 export const QuantitySelector = ({
+  name,
   merchandiseId,
   defaultQuantity = 0,
   availableStock,
-  unitariePrice,
+  unitaryPrice,
+  image,
+  size,
+  color,
 }: QuantitySelectorProps) => {
   const [quantity, setQuantity] = useState<number>(defaultQuantity);
-  const total = formatCurrency(quantity * unitariePrice);
+  const total = formatCurrency(quantity * unitaryPrice);
   const { addProduct } = useBagStore();
 
   const handleDelete = () => {
@@ -32,8 +36,14 @@ export const QuantitySelector = ({
 
   const handleAddToBag = () => {
     addProduct({
+      name,
+      availableStock,
+      unitaryPrice,
       merchandiseId,
       quantity,
+      image,
+      size,
+      color,
     });
   };
 

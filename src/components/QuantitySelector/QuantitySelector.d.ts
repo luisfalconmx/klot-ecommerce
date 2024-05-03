@@ -1,6 +1,10 @@
 export interface QuantitySelectorProps {
+  name: string;
   merchandiseId: string;
   defaultQuantity?: number;
   availableStock: number;
-  unitariePrice: number;
+  unitaryPrice: number;
+  image: string;
+  size?: string;
+  color?: string;
 }

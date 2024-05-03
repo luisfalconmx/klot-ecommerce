@@ -145,10 +145,14 @@ export default async function Product({ params, searchParams }: ProductProps) {
         )}
 
         <QuantitySelector
+          name={title as string}
           merchandiseId={merchandiseId}
           defaultQuantity={availableStock ? 1 : 0}
           availableStock={availableStock}
-          unitariePrice={price}
+          unitaryPrice={price}
+          image={productImage}
+          size={hasOnlyDefaultVariant ? "" : defaultSize?.value}
+          color={hasOnlyDefaultVariant ? "" : defaultColor?.value}
         />
       </section>
 
