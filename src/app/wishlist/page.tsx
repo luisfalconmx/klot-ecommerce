@@ -10,8 +10,8 @@ export default function WishListPage() {
   const { products } = useWishlistStore();
 
   return (
-    <main className="mt-12 mb-24">
-      <section className="grid grid-cols-[48px_1fr_48px] items-center mx-6 mb-8">
+    <main className="mt-12 mb-24 max-w-screen-xl lg:mx-auto">
+      <section className="grid grid-cols-[48px_1fr_48px] items-center mx-6 mb-8 lg:mb-16">
         <Link
           href="/"
           className="p-3 bg-pearl rounded-full cursor-pointer block w-fit"
@@ -22,7 +22,7 @@ export default function WishListPage() {
           Wishlist
         </h1>
       </section>
-      <section className="grid grid-cols-2 gap-4 mx-6">
+      <section className="max-w-screen-md lg:mx-auto grid grid-cols-2 lg:grid-cols-3 gap-4 mx-6">
         {products.map((i) => (
           <ProductCard
             key={i.merchandiseId}

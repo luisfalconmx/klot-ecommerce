@@ -35,7 +35,7 @@ export default async function Home() {
                 </Link>
               </li>
               <li>
-                <Link href="/whislist" className="font-medium">
+                <Link href="/wishlist" className="font-medium">
                   Wishlist
                 </Link>
               </li>
