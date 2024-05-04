@@ -16,8 +16,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const total = data?.collectionByHandle?.productsCount?.count;
 
   return (
-    <main className="mt-12 mb-24 mx-6">
-      <section className="grid grid-cols-[48px_1fr_48px] items-center mb-8">
+    <main className="mt-12 mb-24 mx-6 max-w-screen-xl lg:mx-auto">
+      <section className="grid grid-cols-[48px_1fr_48px] items-center mb-8 lg:mb-16">
         <Link
           href="/categories"
           className="p-3 bg-pearl rounded-full cursor-pointer block w-fit"
@@ -29,7 +29,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         </h1>
       </section>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-3 lg:max-w-screen-md lg:mx-auto gap-4">
         {data?.collectionByHandle?.products.nodes.map((i) => (
           <ProductCard
             key={i.id}
@@ -37,6 +37,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             price={i.priceRangeV2.minVariantPrice.amount}
             image={i.featuredImage?.url}
             link={`/products/${i.handle}`}
+            merchandiseId={i.id}
           />
         ))}
       </div>
