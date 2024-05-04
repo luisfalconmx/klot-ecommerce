@@ -14,8 +14,8 @@ export default function Cart() {
   const total = formatCurrency(subtotal.reduce((a, b) => a + b, 0));
 
   return (
-    <main className="mt-12 mb-24">
-      <section className="grid grid-cols-[48px_1fr_48px] items-center mx-6 mb-8">
+    <main className="mt-12 mb-24 lg:max-w-screen-xl lg:mx-auto">
+      <section className="grid grid-cols-[48px_1fr_48px] items-center mx-6 mb-8 lg:mb-16">
         <Link
           href="/"
           className="p-3 bg-pearl rounded-full cursor-pointer block w-fit"
@@ -26,7 +26,7 @@ export default function Cart() {
           Cart
         </h1>
       </section>
-      <section className="mx-6">
+      <section className="mx-6 lg:mt-32">
         {products.length <= 0 && (
           <section className="flex flex-col items-center">
             <Image
@@ -66,10 +66,10 @@ export default function Cart() {
                 />
               ))}
             </section>
-            <section className="border-t block text-right pt-3">
+            <section className="border-t block text-xl text-right pt-3 lg:text-3xl">
               <b>Total: {total}</b>
             </section>
-            <button className="bg-primary text-center px-6 py-4 text-xl text-white rounded-full w-full mt-16">
+            <button className="bg-primary text-center px-6 py-4 text-xl text-white max-w-[400px] mx-auto block rounded-full w-full mt-16">
               Checkout
             </button>
           </>

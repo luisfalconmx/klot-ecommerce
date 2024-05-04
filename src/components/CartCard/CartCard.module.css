@@ -1,5 +1,5 @@
 .CartCard {
-  @apply bg-[#dad9d5] dark:bg-dark-200 min-w-[160px] rounded-lg overflow-hidden grid grid-cols-[90px_1fr_32px] px-3 py-3;
+  @apply bg-[#dad9d5] dark:bg-dark-200 min-w-[160px] rounded-lg overflow-hidden grid grid-cols-[80px_1fr_32px] lg:grid-cols-[140px_1fr_60px] px-3 py-3;
 
   &__container {
     @apply w-full px-4 py-2;
@@ -22,7 +22,7 @@
   }
 
   &__name {
-    @apply text-base mb-2;
+    @apply text-base mb-2 lg:text-2xl;
   }
 
   &__cost-track {
@@ -30,14 +30,14 @@
   }
 
   &__price {
-    @apply font-bold mb-4;
+    @apply font-bold mb-4 lg:text-xl;
   }
 
   &__input-quantity {
-    @apply font-bold text-center appearance-none bg-transparent;
+    @apply font-bold text-center appearance-none bg-transparent lg:text-xl;
   }
 
   &__tag {
-    @apply text-xs border py-1 px-2 font-bold dark:text-white text-black/60 rounded border-black dark:border-white mt-5;
+    @apply text-xs lg:text-base border py-1 px-2 font-bold dark:text-white text-black/60 rounded border-black dark:border-white mt-5;
   }
 }

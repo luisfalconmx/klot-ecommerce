@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useWishlistStore } from "@/stores/useWishlistStore";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
+import HeartIllustration from "@/assets/images/heart-illustration.svg";
 
 export default function WishListPage() {
   const { products } = useWishlistStore();
@@ -22,18 +23,41 @@ export default function WishListPage() {
           Wishlist
         </h1>
       </section>
-      <section className="max-w-screen-md lg:mx-auto grid grid-cols-2 lg:grid-cols-3 gap-4 mx-6">
-        {products.map((i) => (
-          <ProductCard
-            key={i.merchandiseId}
-            name={i.name}
-            price={i.price}
-            image={i.image}
-            link={i.link}
-            merchandiseId={i.merchandiseId}
+      {products.length <= 0 && (
+        <section className="flex flex-col items-center">
+          <Image
+            src={HeartIllustration}
+            alt=""
+            width={100}
+            height={100}
+            className="mb-7"
           />
-        ))}
-      </section>
+          <p className="text-2xl font-bold mb-7 text-center">
+            Your Cart is Empty
+          </p>
+
+          <Link
+            href="/categories"
+            className="bg-primary text-white py-4 px-6 rounded-full cursor-pointer"
+          >
+            Explore Categories
+          </Link>
+        </section>
+      )}
+      {products.length > 0 && (
+        <section className="max-w-screen-md lg:mx-auto grid grid-cols-2 lg:grid-cols-3 gap-4 mx-6">
+          {products.map((i) => (
+            <ProductCard
+              key={i.merchandiseId}
+              name={i.name}
+              price={i.price}
+              image={i.image}
+              link={i.link}
+              merchandiseId={i.merchandiseId}
+            />
+          ))}
+        </section>
+      )}
     </main>
   );
 }

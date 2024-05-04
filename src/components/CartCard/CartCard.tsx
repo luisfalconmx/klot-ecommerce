@@ -23,7 +23,6 @@ export const CartCard = ({
 }: CartCardProps) => {
   const [quantity, setQuantity] = useState<number>(defaultQuantity);
   const { addProduct, deleteProduct } = useBagStore();
-  const total = formatCurrency(unitaryPrice * quantity);
 
   const handleRemoveItem = () => {
     if (quantity > 1) {
@@ -59,13 +58,14 @@ export const CartCard = ({
 
   return (
     <div className={styles["CartCard"]}>
-      <Image
-        src={image}
-        alt=""
-        width={90}
-        height={90}
-        className="object-cover rounded-xl"
-      />
+      <div className="relative w-full h-[90px] lg:h-[160px]">
+        <Image
+          src={image}
+          alt=""
+          fill
+          className="object-cover rounded-xl object-top"
+        />
+      </div>
       <div className={styles["CartCard__container"]}>
         <div className={styles["CartCard__content"]}>
           <h3 className={styles["CartCard__name"]}>{name}</h3>
