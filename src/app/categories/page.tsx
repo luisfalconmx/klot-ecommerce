@@ -9,7 +9,7 @@ export default async function Categories() {
   const data = await getCollections();
 
   return (
-    <main className="mt-12 mb-28 mx-6">
+    <main className="mt-12 mb-28 mx-6 max-w-screen-xl lg:mx-auto">
       <section className="grid grid-cols-[48px_1fr_48px] items-center mb-8">
         <Link
           href="/"
@@ -22,7 +22,7 @@ export default async function Categories() {
         </h1>
       </section>
 
-      <div className="flex flex-col space-y-3">
+      <div className="flex flex-col space-y-3 lg:grid lg:grid-cols-2 lg:space-y-0 lg:gap-4">
         {data?.collections.edges.map((i) => (
           <Category
             key={i.node.id}
