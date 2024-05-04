@@ -39,7 +39,9 @@ export default function RootLayout({
           "text-black dark:bg-dark-100 dark:text-white"
         )}
       >
-        <ThemeProvider attribute="data-theme">{children}</ThemeProvider>
+        <ThemeProvider defaultTheme="dark" attribute="data-theme">
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

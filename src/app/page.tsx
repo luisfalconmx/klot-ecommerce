@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Navbar, Search, Category, ProductCard } from "@/components";
 import Logo from "@/assets/images/logo.svg";
-import IconBag from "@/assets/icons/icon-bag.svg";
 import { getCollections, getProductsByTag } from "@/services";
 import { createSlug } from "@/utils";
 import { ThemeSwitch } from "@/components";
@@ -14,8 +13,8 @@ export default async function Home() {
   return (
     <>
       <Navbar />
-      <main className="mt-12 mb-24">
-        <section className="flex mx-6 justify-between mb-8 items-center">
+      <main className="mt-12 mb-24 max-w-screen-xl mx-auto">
+        <section className="grid grid-cols-2 lg:grid-cols-[80px_1fr_350px_30px] lg:gap-x-8 mx-6 justify-between mb-8 items-center gap-y-6">
           <Image
             src={Logo}
             alt=""
@@ -23,19 +22,55 @@ export default async function Home() {
             height={30}
             className="dark:invert"
           />
-          <ThemeSwitch />
+          <nav className="hidden lg:block">
+            <ul className="flex space-x-4">
+              <li>
+                <Link href="/" className="font-medium">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/categories" className="font-medium">
+                  Categories
+                </Link>
+              </li>
+              <li>
+                <Link href="/whislist" className="font-medium">
+                  Wishlist
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <Search className="w-full row-start-2 lg:row-start-auto col-span-2 lg:col-auto" />
+          <div className="ml-auto">
+            <ThemeSwitch />
+          </div>
         </section>
 
-        <Search className="mx-6 mb-8" />
+        <section className="bg-primary rounded-xl mb-12 hidden lg:block">
+          <div className="flex flex-col items-center justify-center h-64">
+            <h1 className="text-4xl text-white font-bold mb-4">
+              Welcome to our store
+            </h1>
+            <p className="text-white text-lg">
+              Get your favorite items at the best price
+            </p>
+          </div>
+        </section>
 
-        <section className="ml-6 mb-8">
+        <section className="ml-6 mb-8 lg:mb-12">
           <div className="flex justify-between items-center mb-4 mr-6">
-            <h2 className="text-lg text-primary-100 font-bold">Categories</h2>
-            <Link href="/categories" className="font-medium underline">
+            <h2 className="text-lg lg:text-2xl text-primary-100 font-bold">
+              Categories
+            </h2>
+            <Link
+              href="/categories"
+              className="font-medium underline lg:text-lg"
+            >
               See all
             </Link>
           </div>
-          <div className="flex flex-nowrap max-w-full overflow-auto space-x-5 pr-6 pb-2">
+          <div className="flex flex-nowrap max-w-full overflow-auto space-x-5 lg:space-x-8 pr-6 pb-2">
             {categories?.collections.edges.map((i) => (
               <Category
                 key={i.node.id}
@@ -49,8 +84,10 @@ export default async function Home() {
 
         <section className="ml-6 mb-8">
           <div className="flex justify-between items-center mb-4 mr-6">
-            <h2 className="text-lg text-primary-100 font-bold">Top Selling</h2>
-            <Link href="#" className="font-medium underline">
+            <h2 className="text-lg lg:text-2xl text-primary-100 font-bold">
+              Top Selling
+            </h2>
+            <Link href="#" className="font-medium underline text-lg">
               See all
             </Link>
           </div>

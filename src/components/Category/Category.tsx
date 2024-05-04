@@ -18,13 +18,9 @@ export const Category = ({
         [styles["Category--track"]]: variant === "track",
       })}
     >
-      <Image
-        src={image}
-        alt=""
-        width={56}
-        height={56}
-        className={styles["Category__image"]}
-      />
+      <figure className={styles["Category__figure"]}>
+        <Image src={image} alt="" fill className={styles["Category__image"]} />
+      </figure>
       <b className={styles["Category__title"]}>{title}</b>
     </Link>
   );

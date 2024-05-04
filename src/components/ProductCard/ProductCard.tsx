@@ -28,8 +28,7 @@ export const ProductCard = ({
             className={styles["ProductCard__image"]}
             src={image}
             alt=""
-            width={160}
-            height={220}
+            fill
           />
         </div>
         <div className={styles["ProductCard__content"]}>

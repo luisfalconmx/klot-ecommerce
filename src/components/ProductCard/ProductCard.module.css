@@ -1,16 +1,12 @@
 .ProductCard {
-  @apply bg-pearl min-w-[170px] rounded-lg relative block overflow-hidden max-w-[180px] dark:bg-dark-200;
+  @apply bg-pearl min-w-[170px] rounded-lg relative block overflow-hidden max-w-[180px] lg:min-w-[240px] lg:max-w-[250px] dark:bg-dark-200;
 
   &__head {
-    @apply relative;
-  }
-
-  &__button {
-    @apply absolute top-0 right-0 p-2 outline-primary z-10;
+    @apply relative w-[180px] h-[230px] lg:w-[250px] lg:h-[320px];
   }
 
   &__image {
-    @apply w-full block h-[230px] object-cover;
+    @apply block object-cover;
   }
 
   &__content {
@@ -18,10 +14,10 @@
   }
 
   &__name {
-    @apply text-sm mb-2;
+    @apply text-sm mb-2 lg:text-lg;
   }
 
   &__price {
-    @apply font-bold;
+    @apply font-bold lg:text-xl;
   }
 }

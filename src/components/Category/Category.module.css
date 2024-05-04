@@ -5,8 +5,12 @@
     @apply flex-row bg-[#e3e3e3] rounded-lg space-x-3 p-3 dark:bg-dark-200;
   }
 
+  &__figure {
+    @apply relative w-[56px] h-[56px] lg:w-[90px] lg:h-[90px] flex items-center justify-center mb-1 lg:mb-2;
+  }
+
   &__image {
-    @apply block mb-1 rounded-full w-[56px] h-[56px] object-cover object-top;
+    @apply block  rounded-full object-cover object-top;
   }
 
   &--track &__image {
@@ -14,7 +18,7 @@
   }
 
   &__title {
-    @apply block font-normal first-letter:uppercase text-sm;
+    @apply block font-normal first-letter:uppercase text-sm lg:text-lg;
   }
 
   &--track &__title {
