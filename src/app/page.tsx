@@ -39,6 +39,11 @@ export default async function Home() {
                   Wishlist
                 </Link>
               </li>
+              <li>
+                <Link href="/cart" className="font-medium">
+                  Cart
+                </Link>
+              </li>
             </ul>
           </nav>
           <Search className="w-full row-start-2 lg:row-start-auto col-span-2 lg:col-auto" />

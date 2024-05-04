@@ -53,13 +53,14 @@ export const SizeSelector = ({ defaultValue, sizes }: SizeSelectorProps) => {
       <dialog
         open={isOpen}
         className={cn(
-          "fixed w-screen min-h-screen flex flex-col justify-end bottom-0 -left-[-100vw] m-auto bg-black/60 z-50",
+          "fixed w-screen min-h-screen flex flex-col justify-end bottom-0 -left-[-100vw] m-auto bg-black/60 z-50 lg:justify-center lg:items-center",
           {
-            "left-0": isOpen,
+            "left-0 lg:top-0 lg:bottom-0 lg:right-0 lg:left-0 lg:m-auto":
+              isOpen,
           }
         )}
       >
-        <section className="bg-white dark:bg-dark-100 px-6 pt-4 rounded-t-2xl min-h-[400px]">
+        <section className="bg-white dark:bg-dark-100 px-6 pt-4 rounded-t-2xl lg:w-full lg:max-w-[600px] lg:rounded-2xl min-h-[400px]">
           <div className="flex relative justify-center items-center">
             <b className="text-2xl mb-8">Size</b>
             <button
