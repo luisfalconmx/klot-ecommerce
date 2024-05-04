@@ -5,6 +5,7 @@ import Logo from "@/assets/images/logo.svg";
 import IconBag from "@/assets/icons/icon-bag.svg";
 import { getCollections, getProductsByTag } from "@/services";
 import { createSlug } from "@/utils";
+import { ThemeSwitch } from "@/components";
 
 export default async function Home() {
   const categories = await getCollections();
@@ -14,20 +15,15 @@ export default async function Home() {
     <>
       <Navbar />
       <main className="mt-12 mb-24">
-        <section className="flex mx-6 justify-between mb-8">
-          <Image src={Logo} alt="" width={60} height={30} />
-          <Link
-            href="#"
-            className="p-2 rounded-full bg-primary w-fit flex items-center justify-center"
-          >
-            <Image
-              src={IconBag}
-              alt=""
-              width={24}
-              height={24}
-              className="invert"
-            />
-          </Link>
+        <section className="flex mx-6 justify-between mb-8 items-center">
+          <Image
+            src={Logo}
+            alt=""
+            width={60}
+            height={30}
+            className="dark:invert"
+          />
+          <ThemeSwitch />
         </section>
 
         <Search className="mx-6 mb-8" />

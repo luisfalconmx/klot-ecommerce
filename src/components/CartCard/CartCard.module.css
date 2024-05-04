@@ -1,5 +1,5 @@
 .CartCard {
-  @apply bg-[#dad9d5] min-w-[160px] rounded-lg overflow-hidden grid grid-cols-[90px_1fr_32px] px-3 py-3;
+  @apply bg-[#dad9d5] dark:bg-dark-200 min-w-[160px] rounded-lg overflow-hidden grid grid-cols-[90px_1fr_32px] px-3 py-3;
 
   &__container {
     @apply w-full px-4 py-2;
@@ -14,7 +14,7 @@
   }
 
   &__trash {
-    @apply p-2 block cursor-pointer;
+    @apply p-2 block cursor-pointer dark:invert;
   }
 
   &__content {
@@ -35,5 +35,9 @@
 
   &__input-quantity {
     @apply font-bold text-center appearance-none bg-transparent;
+  }
+
+  &__tag {
+    @apply text-xs border py-1 px-2 font-bold dark:text-white text-black/60 rounded border-black dark:border-white mt-5;
   }
 }

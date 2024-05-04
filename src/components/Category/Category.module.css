@@ -2,7 +2,7 @@
   @apply flex items-center flex-col min-w-[56px];
 
   &--track {
-    @apply flex-row bg-[#e3e3e3] rounded-lg space-x-3 p-3;
+    @apply flex-row bg-[#e3e3e3] rounded-lg space-x-3 p-3 dark:bg-dark-200;
   }
 
   &__image {
@@ -10,7 +10,7 @@
   }
 
   &--track &__image {
-    @apply rounded-none;
+    @apply rounded-xl;
   }
 
   &__title {

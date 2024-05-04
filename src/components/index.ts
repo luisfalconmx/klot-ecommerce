@@ -7,6 +7,7 @@ import { SizeSelector } from "./SizeSelector/SizeSelector";
 import { ColorSelector } from "./ColorSelector/ColorSelector";
 import { QuantitySelector } from "./QuantitySelector/QuantitySelector";
 import { Wishlist } from "./Wishlist/Wishlist";
+import { ThemeSwitch } from "./ThemeSwitch/ThemeSwitch";
 
 export {
   Navbar,
@@ -18,4 +19,5 @@ export {
   ColorSelector,
   QuantitySelector,
   Wishlist,
+  ThemeSwitch,
 };

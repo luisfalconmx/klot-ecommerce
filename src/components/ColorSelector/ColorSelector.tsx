@@ -34,7 +34,7 @@ export const ColorSelector = ({ defaultValue, colors }: ColorSelectorProps) => {
   return (
     <>
       <button
-        className="flex justify-between bg-pearl rounded-full py-4 px-6 items-center text-left gap-x-4"
+        className="flex justify-between bg-pearl dark:bg-dark-200 rounded-full py-4 px-6 items-center text-left gap-x-4"
         onClick={() => setIsOpen(true)}
       >
         <p className="font-bold">Color</p>
@@ -43,27 +43,39 @@ export const ColorSelector = ({ defaultValue, colors }: ColorSelectorProps) => {
             className="w-6 h-6 rounded-full"
             style={{ backgroundColor: selectedColor }}
           />
-          <Image src={IconArrowDown} alt="" width={24} height={24} />
+          <Image
+            src={IconArrowDown}
+            alt=""
+            width={24}
+            height={24}
+            className="dark:invert"
+          />
         </div>
       </button>
 
       <dialog
         open={isOpen}
         className={cn(
-          "fixed w-screen min-h-screen flex flex-col justify-end bottom-0 -left-[-100vw] m-auto bg-black/60",
+          "fixed w-screen min-h-screen flex flex-col justify-end bottom-0 -left-[-100vw] m-auto bg-black/60 z-50",
           {
             "left-0": isOpen,
           }
         )}
       >
-        <section className="bg-white px-6 pt-4 rounded-t-2xl min-h-[400px]">
+        <section className="bg-white dark:bg-dark-100 px-6 pt-4 rounded-t-2xl min-h-[400px]">
           <div className="flex relative justify-center items-center">
             <b className="text-2xl mb-8">Color</b>
             <button
               onClick={() => setIsOpen(false)}
               className="absolute -top-5 right-0 bottom-0 m-auto"
             >
-              <Image src={IconX} alt="" width={24} height={24} />
+              <Image
+                src={IconX}
+                alt=""
+                width={24}
+                height={24}
+                className="dark:invert"
+              />
             </button>
           </div>
           <div className="flex flex-col space-y-3 max-h-[320px] overflow-y-auto pb-8">
@@ -72,9 +84,10 @@ export const ColorSelector = ({ defaultValue, colors }: ColorSelectorProps) => {
                 key={i}
                 href={handleRedirect(i)}
                 className={cn(
-                  "flex justify-between w-full bg-pearl text-black px-8 py-5 rounded-full uppercase font-bold",
+                  "flex justify-between w-full dark:bg-dark-200 bg-pearl text-black px-8 py-5 rounded-full uppercase font-bold dark:text-white",
                   {
-                    "bg-primary text-white": i.toLowerCase() === selectedColor,
+                    "bg-primary dark:bg-primary text-white":
+                      i.toLowerCase() === selectedColor,
                   }
                 )}
               >

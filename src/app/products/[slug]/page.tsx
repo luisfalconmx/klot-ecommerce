@@ -9,7 +9,7 @@ import {
   Wishlist,
 } from "@/components";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
-import IconFav from "@/assets/icons/icon-fav.svg";
+import { blurImage } from "@/config/blurImage";
 
 interface ProductProps {
   params: {
@@ -122,6 +122,8 @@ export default async function Product({ params, searchParams }: ProductProps) {
           width={400}
           height={400}
           className="rounded-lg h-[320px] object-cover object-top w-full"
+          placeholder="blur"
+          blurDataURL={blurImage}
         />
       </section>
 
@@ -171,10 +173,6 @@ export default async function Product({ params, searchParams }: ProductProps) {
 
         <h2 className="mb-3 text-xl font-bold">Shipping & Returns</h2>
         <p>Free starndard shipping and free 60-day returns</p>
-      </section>
-
-      <section className="mx-6">
-        <h2 className="mb-3 text-xl font-bold">Reviews</h2>
       </section>
     </main>
   );

@@ -1,5 +1,5 @@
 .Navbar {
-  @apply w-screen fixed bottom-0 left-0 bg-white z-50 border-t border-pearl;
+  @apply w-screen fixed bottom-0 left-0 bg-white dark:bg-dark-100 z-50 border-t border-pearl dark:border-dark-100;
 }
 
 .Navbar__list {
@@ -11,7 +11,7 @@
 }
 
 .Navbar__icon {
-  @apply mx-auto;
+  @apply mx-auto dark:invert;
 }
 
 .Navbar__text {

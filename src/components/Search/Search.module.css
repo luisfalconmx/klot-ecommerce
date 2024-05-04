@@ -3,7 +3,7 @@
 }
 
 .Search__input {
-  @apply bg-pearl block w-full py-3 px-5 rounded-full placeholder:text-black outline-primary;
+  @apply bg-pearl block w-full py-3 px-5 rounded-full placeholder:text-black outline-primary dark:bg-dark-200 dark:placeholder:text-white dark:text-white dark:outline-dark-200;
 }
 
 .Search__button {

@@ -100,12 +100,12 @@ export const CartCard = ({
           </div>
           <div className="flex space-x-2">
             {size && (
-              <p className="text-xs border py-1 px-2 font-bold text-black/60 rounded border-black mt-5">
+              <p className={styles["CartCard__tag"]}>
                 Size: <b className="uppercase">{size}</b>
               </p>
             )}
             {color && (
-              <p className="text-xs border py-1 px-2 font-bold text-black/60 rounded border-black mt-5">
+              <p className={styles["CartCard__tag"]}>
                 Color: <b className="capitalize">{color}</b>
               </p>
             )}

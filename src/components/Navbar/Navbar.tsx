@@ -3,7 +3,6 @@ import Link from "next/link";
 import IconHome from "@/assets/icons/icon-home.svg";
 import IconBag from "@/assets/icons/icon-bag-alt.svg";
 import IconFavorites from "@/assets/icons/icon-fav-alt.svg";
-import IconUser from "@/assets/icons/icon-user.svg";
 import styles from "./Navbar.module.css";
 
 export const Navbar = () => (
@@ -18,7 +17,7 @@ export const Navbar = () => (
             height={48}
             className={styles["Navbar__icon"]}
           />
-          <p className={styles["Navbar__text"]}>Favorites</p>
+          <p className={styles["Navbar__text"]}>Wishlist</p>
         </Link>
       </li>
       <li className={styles["Navbar__item"]}>

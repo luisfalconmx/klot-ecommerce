@@ -31,7 +31,6 @@ export default function WishListPage() {
             image={i.image}
             link={i.link}
             merchandiseId={i.merchandiseId}
-            enableAddToWishlist
           />
         ))}
       </section>

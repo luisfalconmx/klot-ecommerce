@@ -49,7 +49,7 @@ export const QuantitySelector = ({
 
   return (
     <>
-      <div className="flex justify-between bg-pearl rounded-full py-4 px-6 items-center text-left gap-x-4">
+      <div className="flex justify-between bg-pearl dark:bg-dark-200 rounded-full py-4 px-6 items-center text-left gap-x-4">
         <p className="font-bold">Quantity</p>
         <div className="flex items-center space-x-2">
           <button

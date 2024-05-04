@@ -1,6 +1,7 @@
+import { ThemeProvider } from "next-themes";
 import localFont from "next/font/local";
+import { cn } from "@/utils";
 import type { Metadata } from "next";
-import { Navbar } from "@/components";
 import "@/styles/globals.css";
 
 // Font files can be colocated inside of `app`
@@ -31,8 +32,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={GilroyFont.className}>{children}</body>
+    <html className="scroll-smooth" lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          GilroyFont.className,
+          "text-black dark:bg-dark-100 dark:text-white"
+        )}
+      >
+        <ThemeProvider attribute="data-theme">{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
