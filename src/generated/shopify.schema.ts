@@ -38447,7 +38447,7 @@ export enum ProductVariantsBulkUpdateUserErrorCode {
   NegativePriceValue = 'NEGATIVE_PRICE_VALUE',
   /** Inventory quantities cannot be provided during update. */
   NoInventoryQuantitesDuringUpdate = 'NO_INVENTORY_QUANTITES_DURING_UPDATE',
-  /** Inventory quantities cannot be updated with variants API. */
+  /** Inventory quantities can only be provided during create. To update inventory for existing variants, use inventoryAdjustQuantities. */
   NoInventoryQuantitiesOnVariantsUpdate = 'NO_INVENTORY_QUANTITIES_ON_VARIANTS_UPDATE',
   /** Variant options are more than the product options. */
   OptionValuesForNumberOfUnknownOptions = 'OPTION_VALUES_FOR_NUMBER_OF_UNKNOWN_OPTIONS',
@@ -52679,6 +52679,13 @@ export type GetProductsByTagQueryVariables = Exact<{
 
 export type GetProductsByTagQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, handle: string, title: string, featuredImage?: { __typename?: 'Image', url: any } | null, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } } }> } };
 
+export type SearchProductsQueryVariables = Exact<{
+  searchTerm: Scalars['String']['input'];
+}>;
+
+
+export type SearchProductsQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, title: string, handle: string, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } }, featuredImage?: { __typename?: 'Image', url: any } | null }> } };
+
 
 export const GetCollectionsDocument = gql`
     query GetCollections {
@@ -52911,3 +52918,55 @@ export type GetProductsByTagQueryHookResult = ReturnType<typeof useGetProductsBy
 export type GetProductsByTagLazyQueryHookResult = ReturnType<typeof useGetProductsByTagLazyQuery>;
 export type GetProductsByTagSuspenseQueryHookResult = ReturnType<typeof useGetProductsByTagSuspenseQuery>;
 export type GetProductsByTagQueryResult = Apollo.QueryResult<GetProductsByTagQuery, GetProductsByTagQueryVariables>;
+export const SearchProductsDocument = gql`
+    query SearchProducts($searchTerm: String!) {
+  products(first: 10, query: $searchTerm) {
+    nodes {
+      id
+      title
+      handle
+      priceRangeV2 {
+        minVariantPrice {
+          amount
+        }
+      }
+      featuredImage {
+        url
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchProductsQuery__
+ *
+ * To run a query within a React component, call `useSearchProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchProductsQuery({
+ *   variables: {
+ *      searchTerm: // value for 'searchTerm'
+ *   },
+ * });
+ */
+export function useSearchProductsQuery(baseOptions: Apollo.QueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables> & ({ variables: SearchProductsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
+      }
+export function useSearchProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
+        }
+export function useSearchProductsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
+        }
+export type SearchProductsQueryHookResult = ReturnType<typeof useSearchProductsQuery>;
+export type SearchProductsLazyQueryHookResult = ReturnType<typeof useSearchProductsLazyQuery>;
+export type SearchProductsSuspenseQueryHookResult = ReturnType<typeof useSearchProductsSuspenseQuery>;
+export type SearchProductsQueryResult = Apollo.QueryResult<SearchProductsQuery, SearchProductsQueryVariables>;

@@ -1,0 +1,17 @@
+query SearchProducts($searchTerm: String!) {
+  products(first: 10, query: $searchTerm) {
+    nodes {
+      id
+      title
+      handle
+      priceRangeV2 {
+        minVariantPrice {
+          amount
+        }
+      }
+      featuredImage {
+        url
+      }
+    }
+  }
+}

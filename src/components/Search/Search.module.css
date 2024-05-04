@@ -1,7 +1,11 @@
 .Search {
-  @apply block box-border;
+  @apply box-border relative flex items-center space-x-2;
 }
 
 .Search__input {
   @apply bg-pearl block w-full py-3 px-5 rounded-full placeholder:text-black outline-primary;
+}
+
+.Search__button {
+  @apply bg-primary h-full rounded-full p-1;
 }

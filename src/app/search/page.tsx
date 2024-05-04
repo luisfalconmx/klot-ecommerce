@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Search, ProductCard } from "@/components";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
-import IconFilter from "@/assets/icons/icon-filter.svg";
-import { ProductCard } from "@/components";
-import { Search } from "@/components";
+import { searchProducts } from "@/services";
+import LensIllustration from "@/assets/images/lens-illustration.svg";
 
 interface SearchPageProps {
   searchParams: {
@@ -11,7 +11,14 @@ interface SearchPageProps {
   };
 }
 
-export default function SearchPage({ searchParams }: SearchPageProps) {
+export default async function SearchPage({ searchParams }: SearchPageProps) {
+  let products: any[] = [];
+
+  if (searchParams.term) {
+    const data = await searchProducts(searchParams.term || "");
+    products = data?.products.nodes || [];
+  }
+
   return (
     <main className="mt-12 mb-24">
       <section className="mx-6 flex items-center space-x-4 mb-6">
@@ -25,60 +32,44 @@ export default function SearchPage({ searchParams }: SearchPageProps) {
         <Search className="w-full" defaultValue={searchParams.term} />
       </section>
 
-      <section className="flex space-x-2 mb-8 mx-6 flex-nowrap max-w-full overflow-auto">
-        <button className="pl-2 pr-3 py-1 bg-primary text-white cursor-pointer rounded-full flex items-center">
+      {products.length <= 0 && (
+        <section className="flex flex-col items-center mx-6 mt-24">
           <Image
-            src={IconFilter}
+            src={LensIllustration}
             alt=""
-            width={16}
-            height={16}
-            className="block invert mr-1"
+            width={100}
+            height={100}
+            className="mb-7"
           />
-          Price
-        </button>
-        <button className="pl-2 pr-3 py-1 bg-pearl text-black cursor-pointer rounded-full flex items-center space-x-2">
-          <Image
-            src={IconFilter}
-            alt=""
-            width={16}
-            height={16}
-            className="block mr-1"
-          />{" "}
-          Sort by
-        </button>
-        <button className="pl-2 pr-3 py-1 cursor-pointer rounded-full bg-primary text-white flex items-center space-x-2">
-          <Image
-            src={IconFilter}
-            alt=""
-            width={16}
-            height={16}
-            className="block invert mr-1"
-          />{" "}
-          Genre
-        </button>
-        <button className="pl-2 pr-3 py-1 cursor-pointer rounded-full bg-primary text-white flex items-center space-x-2">
-          <Image
-            src={IconFilter}
-            alt=""
-            width={16}
-            height={16}
-            className="block invert mr-1"
-          />{" "}
-          Color
-        </button>
-      </section>
+          <p className="text-2xl font-bold mb-7 text-center">
+            Sorry, we couldn&apos;t find any matching result for your Search.
+          </p>
 
-      <section className="mx-6">
-        <div className="grid grid-cols-2 gap-4">
-          <ProductCard name="Hoodie" price={100} />
-          <ProductCard name="Hoodie" price={100} />
-          <ProductCard name="Hoodie" price={100} />
-          <ProductCard name="Hoodie" price={100} />
-          <ProductCard name="Hoodie" price={100} />
-          <ProductCard name="Hoodie" price={100} />
-          <ProductCard name="Hoodie" price={100} />
-        </div>
-      </section>
+          <Link
+            href="/categories"
+            className="bg-primary text-white py-4 px-6 rounded-full cursor-pointer"
+          >
+            Explore Categories
+          </Link>
+        </section>
+      )}
+
+      {products.length > 0 && (
+        <section className="mx-6">
+          <div className="grid grid-cols-2 gap-4">
+            {products.map((i) => (
+              <ProductCard
+                key={i.title}
+                name={i.title}
+                price={i.priceRangeV2.minVariantPrice.amount}
+                image={i.featuredImage?.url}
+                link={`/products/${i.handle}`}
+                merchandiseId={i.id}
+              />
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }
