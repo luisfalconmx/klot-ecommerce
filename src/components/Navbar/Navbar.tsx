@@ -10,17 +10,6 @@ export const Navbar = () => (
   <nav className={styles["Navbar"]}>
     <ul className={styles["Navbar__list"]}>
       <li className={styles["Navbar__item"]}>
-        <Link href="/">
-          <Image
-            src={IconHome}
-            alt=""
-            width={48}
-            height={48}
-            className={styles["Navbar__icon"]}
-          />
-        </Link>
-      </li>
-      <li className={styles["Navbar__item"]}>
         <Link href="/wishlist">
           <Image
             src={IconFavorites}
@@ -29,6 +18,19 @@ export const Navbar = () => (
             height={48}
             className={styles["Navbar__icon"]}
           />
+          <p className={styles["Navbar__text"]}>Favorites</p>
+        </Link>
+      </li>
+      <li className={styles["Navbar__item"]}>
+        <Link href="/">
+          <Image
+            src={IconHome}
+            alt=""
+            width={48}
+            height={48}
+            className={styles["Navbar__icon"]}
+          />
+          <p className={styles["Navbar__text"]}>Home</p>
         </Link>
       </li>
       <li className={styles["Navbar__item"]}>
@@ -40,17 +42,7 @@ export const Navbar = () => (
             height={48}
             className={styles["Navbar__icon"]}
           />
-        </Link>
-      </li>
-      <li className={styles["Navbar__item"]}>
-        <Link href="/account">
-          <Image
-            src={IconUser}
-            alt=""
-            width={48}
-            height={48}
-            className={styles["Navbar__icon"]}
-          />
+          <p className={styles["Navbar__text"]}>Cart</p>
         </Link>
       </li>
     </ul>

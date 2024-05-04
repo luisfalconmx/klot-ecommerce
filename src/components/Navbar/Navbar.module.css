@@ -3,12 +3,17 @@
 }
 
 .Navbar__list {
-  @apply w-full flex justify-between px-6 py-4;
+  @apply w-full flex justify-evenly py-2;
 }
 
 .Navbar__item {
-  @apply cursor-pointer;
+  @apply cursor-pointer text-center;
 }
 
 .Navbar__icon {
+  @apply mx-auto;
+}
+
+.Navbar__text {
+  @apply text-sm;
 }
