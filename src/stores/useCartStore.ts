@@ -38,12 +38,16 @@ export const useBagStore = create(
           );
 
           if (exists) {
-            const listOfProducts = state.products.filter(
-              (i) => i.merchandiseId !== product.merchandiseId
+            // found the index
+            const index = state.products.findIndex(
+              (i) => i.merchandiseId === product.merchandiseId
             );
 
+            // update the product
+            state.products[index].quantity = product.quantity;
+
             return {
-              products: [...listOfProducts, product],
+              products: [...state.products],
             };
           }
 

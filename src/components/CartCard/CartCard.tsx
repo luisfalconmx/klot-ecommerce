@@ -34,6 +34,8 @@ export const CartCard = ({
         merchandiseId,
         image,
         unitaryPrice,
+        color,
+        size,
       });
     }
   };
@@ -52,6 +54,8 @@ export const CartCard = ({
         merchandiseId,
         image,
         unitaryPrice,
+        color,
+        size,
       });
     }
   };
