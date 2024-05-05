@@ -3,6 +3,7 @@ import Image from "next/image";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
 import { ProductCard } from "@/components";
 import { getProductsByCollection } from "@/services";
+import LensIllustration from "@/assets/images/lens-illustration.svg";
 
 interface CategoryPageProps {
   params: {
@@ -13,7 +14,7 @@ interface CategoryPageProps {
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const data = await getProductsByCollection(params.category);
   const title = params.category;
-  const total = data?.collectionByHandle?.productsCount?.count;
+  const total = data?.collectionByHandle?.productsCount?.count || 0;
 
   return (
     <main className="mt-12 mb-24 mx-6 max-w-screen-xl lg:mx-auto">
@@ -29,18 +30,42 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         </h1>
       </section>
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 lg:max-w-screen-md lg:mx-auto gap-4">
-        {data?.collectionByHandle?.products.nodes.map((i) => (
-          <ProductCard
-            key={i.id}
-            name={i.title}
-            price={i.priceRangeV2.minVariantPrice.amount}
-            image={i.featuredImage?.url}
-            link={`/products/${i.handle}`}
-            merchandiseId={i.id}
+      {total <= 0 && (
+        <section className="flex flex-col items-center mx-6 mt-24">
+          <Image
+            src={LensIllustration}
+            alt=""
+            width={100}
+            height={100}
+            className="mb-7"
           />
-        ))}
-      </div>
+          <p className="text-2xl font-bold mb-7 text-center">
+            Sorry, we couldn&apos;t find any result
+          </p>
+
+          <Link
+            href="/categories"
+            className="bg-primary text-white py-4 px-6 rounded-full cursor-pointer"
+          >
+            Explore Categories
+          </Link>
+        </section>
+      )}
+
+      {total > 0 && (
+        <div className="grid grid-cols-2 lg:grid-cols-3 lg:max-w-screen-md lg:mx-auto gap-4">
+          {data?.collectionByHandle?.products.nodes.map((i) => (
+            <ProductCard
+              key={i.id}
+              name={i.title}
+              price={i.priceRangeV2.minVariantPrice.amount}
+              image={i.featuredImage?.url}
+              link={`/products/${i.handle}`}
+              merchandiseId={i.id}
+            />
+          ))}
+        </div>
+      )}
     </main>
   );
 }

@@ -20,8 +20,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
   }
 
   return (
-    <main className="mt-12 mb-24">
-      <section className="mx-6 flex items-center space-x-4 mb-6">
+    <main className="mt-12 mb-24 max-w-screen-xl lg:mx-auto">
+      <section className="mx-6 flex lg:grid lg:grid-cols-[40px_1fr_40px] lg:justify-center items-center space-x-4 mb-8 lg:mb-16">
         <Link
           href="/"
           className="p-3 bg-pearl rounded-full cursor-pointer block w-fit"
@@ -29,7 +29,11 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           <Image src={IconArrowLeft} alt="" width={24} height={24} />
         </Link>
 
-        <Search className="w-full" defaultValue={searchParams.term} />
+        <Search
+          className="w-full lg:max-w-screen-md lg:!mx-auto block"
+          defaultValue={searchParams.term}
+        />
+        <div></div>
       </section>
 
       {products.length <= 0 && (
@@ -56,7 +60,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
       {products.length > 0 && (
         <section className="mx-6">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="max-w-screen-md lg:mx-auto grid grid-cols-2 lg:grid-cols-3 gap-4 mx-6">
             {products.map((i) => (
               <ProductCard
                 key={i.title}

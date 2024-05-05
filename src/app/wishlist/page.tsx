@@ -33,7 +33,7 @@ export default function WishListPage() {
             className="mb-7"
           />
           <p className="text-2xl font-bold mb-7 text-center">
-            Your Cart is Empty
+            Your Wishlist is Empty
           </p>
 
           <Link

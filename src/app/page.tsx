@@ -25,11 +25,6 @@ export default async function Home() {
           <nav className="hidden lg:block">
             <ul className="flex space-x-4">
               <li>
-                <Link href="/" className="font-medium">
-                  Home
-                </Link>
-              </li>
-              <li>
                 <Link href="/categories" className="font-medium">
                   Categories
                 </Link>
