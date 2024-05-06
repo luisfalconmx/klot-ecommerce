@@ -19,6 +19,7 @@ export const QuantitySelector = ({
   color,
 }: QuantitySelectorProps) => {
   const [quantity, setQuantity] = useState<number>(defaultQuantity);
+  const [isAddedToBag, setIsAddedToBag] = useState<boolean>(false);
   const total = formatCurrency(quantity * unitaryPrice);
   const { addProduct } = useBagStore();
 
@@ -35,6 +36,8 @@ export const QuantitySelector = ({
   };
 
   const handleAddToBag = () => {
+    setIsAddedToBag(true);
+
     addProduct({
       name,
       availableStock,
@@ -45,6 +48,10 @@ export const QuantitySelector = ({
       size,
       color,
     });
+
+    setTimeout(() => {
+      setIsAddedToBag(false);
+    }, 1500);
   };
 
   return (
@@ -78,12 +85,21 @@ export const QuantitySelector = ({
         </div>
       </div>
       <button
-        className="bg-primary flex justify-between px-6 items-center text-white rounded-full py-4 disabled:bg-pearl disabled:text-neutral-400"
+        className="bg-primary flex justify-between px-6 items-center text-white rounded-full py-4 disabled:bg-pearl disabled:text-neutral-400 active:scale-95 scale-100 transition-all ease-linear duration-200"
         disabled={availableStock <= 0}
         onClick={handleAddToBag}
       >
-        <span className="font-bold">{total}</span>
-        <span className="">Add to bag</span>
+        {isAddedToBag ? (
+          <>
+            <span className="font-bold">Added to bag</span>
+            <span className="animate-pulse">✓</span>
+          </>
+        ) : (
+          <>
+            <span className="font-bold">{total}</span>
+            <span className="">Add to bag</span>
+          </>
+        )}
       </button>
     </>
   );
