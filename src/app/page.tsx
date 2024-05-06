@@ -87,7 +87,10 @@ export default async function Home() {
             <h2 className="text-lg lg:text-2xl text-primary-100 font-bold">
               Top Selling
             </h2>
-            <Link href="#" className="font-medium underline text-lg">
+            <Link
+              href={`/tag/top_selling`}
+              className="font-medium underline text-lg"
+            >
               See all
             </Link>
           </div>
