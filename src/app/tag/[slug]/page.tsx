@@ -3,6 +3,7 @@ import Image from "next/image";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
 import { getProductsByTag } from "@/services";
 import { ProductCard } from "@/components";
+import { notFound } from "next/navigation";
 
 interface ProductProps {
   params: {
@@ -12,6 +13,10 @@ interface ProductProps {
 
 export default async function Product({ params }: ProductProps) {
   const data = await getProductsByTag(params.slug);
+
+  if (!data?.products.nodes.length) {
+    notFound();
+  }
 
   return (
     <main className="mt-12 mb-28 mx-6 max-w-screen-xl lg:mx-auto">

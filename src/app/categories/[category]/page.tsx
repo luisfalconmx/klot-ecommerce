@@ -4,6 +4,7 @@ import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
 import { ProductCard } from "@/components";
 import { getProductsByCollection } from "@/services";
 import LensIllustration from "@/assets/images/lens-illustration.svg";
+import { notFound } from "next/navigation";
 
 interface CategoryPageProps {
   params: {
@@ -13,6 +14,10 @@ interface CategoryPageProps {
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const data = await getProductsByCollection(params.category);
+  if (!data?.collectionByHandle?.products?.nodes) {
+    notFound();
+  }
+
   const title = params.category;
   const total = data?.collectionByHandle?.productsCount?.count || 0;
 

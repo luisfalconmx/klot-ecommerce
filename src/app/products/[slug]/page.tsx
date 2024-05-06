@@ -8,6 +8,7 @@ import {
   QuantitySelector,
   Wishlist,
 } from "@/components";
+import { notFound } from "next/navigation";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
 import { blurImage } from "@/config/blurImage";
 
@@ -23,6 +24,9 @@ interface ProductProps {
 
 export default async function Product({ params, searchParams }: ProductProps) {
   const data = await getProductBySlug(params.slug);
+  if (!data?.productByHandle?.id) {
+    notFound();
+  }
   let selectedVariant;
 
   const getVariants = (term: string) => {
