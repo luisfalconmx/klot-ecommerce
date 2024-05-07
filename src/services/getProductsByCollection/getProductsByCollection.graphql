@@ -1,9 +1,15 @@
-query GetProductsByCollection($handle: String!) {
+query GetProductsByCollection($handle: String!, $first: Int!, $after: String) {
   collectionByHandle(handle: $handle) {
     productsCount {
       count
     }
-    products(first: 10) {
+    products(first: $first, after: $after) {
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
+      }
       nodes {
         id
         handle

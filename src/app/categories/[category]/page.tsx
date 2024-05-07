@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
-import { ProductCard } from "@/components";
+import { ProductCard, InfiniteScroll } from "@/components";
 import { getProductsByCollection } from "@/services";
 import LensIllustration from "@/assets/images/lens-illustration.svg";
 import { notFound } from "next/navigation";
@@ -13,11 +13,15 @@ interface CategoryPageProps {
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const data = await getProductsByCollection(params.category);
+  const maxProducts = 12;
+  const data = await getProductsByCollection(params.category, maxProducts);
   if (!data?.collectionByHandle?.products?.nodes) {
     notFound();
   }
-
+  const hasNextPage =
+    data?.collectionByHandle?.products.pageInfo.hasNextPage || false;
+  const lastCursor =
+    data?.collectionByHandle?.products.pageInfo.endCursor || undefined;
   const title = params.category;
   const total = data?.collectionByHandle?.productsCount?.count || 0;
 
@@ -69,6 +73,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               merchandiseId={i.id}
             />
           ))}
+          <InfiniteScroll
+            handle="collection"
+            slug={params.category}
+            hasNextPage={hasNextPage}
+            lastCursor={lastCursor}
+            maxProducts={maxProducts}
+          />
         </div>
       )}
     </main>

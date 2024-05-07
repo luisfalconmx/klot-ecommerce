@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useIntersectionObserver } from "@uidotdev/usehooks";
-import { getProductsByTag } from "@/services";
+import { getProductsByTag, getProductsByCollection } from "@/services";
 import { ProductCard } from "@/components";
 
 interface InfiniteScrollProps {
@@ -32,12 +32,10 @@ export const InfiniteScroll = ({
   });
 
   const loadMore = async () => {
+    let newData;
+
     if (handle === "tag") {
-      const newData = await getProductsByTag(
-        slug || "",
-        maxProducts,
-        lastIndex
-      );
+      newData = await getProductsByTag(slug || "", maxProducts, lastIndex);
       const products = newData?.products.nodes.map((i) => i) || [];
 
       if (newData?.products.pageInfo.endCursor) {
@@ -50,8 +48,32 @@ export const InfiniteScroll = ({
         setNextPage(false);
       }
 
-      setProducts((prev) => [...prev, ...products]);
+      newData = products;
     }
+
+    if (handle === "collection") {
+      newData = await getProductsByCollection(
+        slug || "",
+        maxProducts,
+        lastIndex
+      );
+      const products =
+        newData?.collectionByHandle?.products?.nodes.map((i) => i) || [];
+
+      if (newData?.collectionByHandle?.products.pageInfo.endCursor) {
+        setLastIndex(newData?.collectionByHandle?.products.pageInfo.endCursor);
+      }
+
+      if (newData?.collectionByHandle?.products.pageInfo.hasNextPage) {
+        setNextPage(true);
+      } else {
+        setNextPage(false);
+      }
+
+      newData = products;
+    }
+
+    setProducts((prev) => [...prev, ...products]);
   };
 
   useEffect(() => {

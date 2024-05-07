@@ -52709,10 +52709,12 @@ export type GetProductBySlugQuery = { __typename?: 'QueryRoot', productByHandle?
 
 export type GetProductsByCollectionQueryVariables = Exact<{
   handle: Scalars['String']['input'];
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetProductsByCollectionQuery = { __typename?: 'QueryRoot', collectionByHandle?: { __typename?: 'Collection', productsCount?: { __typename?: 'Count', count: number } | null, products: { __typename?: 'ProductConnection', nodes: Array<{ __typename?: 'Product', id: string, handle: string, title: string, featuredImage?: { __typename?: 'Image', url: any } | null, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } } }> } } | null };
+export type GetProductsByCollectionQuery = { __typename?: 'QueryRoot', collectionByHandle?: { __typename?: 'Collection', productsCount?: { __typename?: 'Count', count: number } | null, products: { __typename?: 'ProductConnection', pageInfo: { __typename?: 'PageInfo', startCursor?: string | null, endCursor?: string | null, hasNextPage: boolean, hasPreviousPage: boolean }, nodes: Array<{ __typename?: 'Product', id: string, handle: string, title: string, featuredImage?: { __typename?: 'Image', url: any } | null, priceRangeV2: { __typename?: 'ProductPriceRangeV2', minVariantPrice: { __typename?: 'MoneyV2', amount: any } } }> } } | null };
 
 export type GetProductsByTagQueryVariables = Exact<{
   tag: Scalars['String']['input'];
@@ -52854,12 +52856,18 @@ export type GetProductBySlugLazyQueryHookResult = ReturnType<typeof useGetProduc
 export type GetProductBySlugSuspenseQueryHookResult = ReturnType<typeof useGetProductBySlugSuspenseQuery>;
 export type GetProductBySlugQueryResult = Apollo.QueryResult<GetProductBySlugQuery, GetProductBySlugQueryVariables>;
 export const GetProductsByCollectionDocument = gql`
-    query GetProductsByCollection($handle: String!) {
+    query GetProductsByCollection($handle: String!, $first: Int!, $after: String) {
   collectionByHandle(handle: $handle) {
     productsCount {
       count
     }
-    products(first: 10) {
+    products(first: $first, after: $after) {
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
+      }
       nodes {
         id
         handle
@@ -52891,6 +52899,8 @@ export const GetProductsByCollectionDocument = gql`
  * const { data, loading, error } = useGetProductsByCollectionQuery({
  *   variables: {
  *      handle: // value for 'handle'
+ *      first: // value for 'first'
+ *      after: // value for 'after'
  *   },
  * });
  */
