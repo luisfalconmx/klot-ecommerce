@@ -1,3 +1,5 @@
+"use server";
+
 import {
   GetProductsByTagQuery,
   GetProductsByTagQueryVariables,
@@ -5,7 +7,11 @@ import {
 } from "@/generated/shopify.schema";
 import { getClient } from "@/clients/graphqlClient";
 
-export const getProductsByTag = async (tag: string) => {
+export const getProductsByTag = async (
+  tag: string,
+  first: number,
+  after?: string
+) => {
   try {
     const client = getClient();
     const response = await client.query<
@@ -15,6 +21,8 @@ export const getProductsByTag = async (tag: string) => {
       query: GetProductsByTagDocument,
       variables: {
         tag: `tag:${tag}`,
+        first,
+        after,
       },
     });
 

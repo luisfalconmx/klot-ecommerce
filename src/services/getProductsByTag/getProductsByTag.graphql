@@ -1,9 +1,15 @@
-query GetProductsByTag($tag: String!) {
-  products(first: 10, query: $tag) {
+query GetProductsByTag($tag: String!, $first: Int!, $after: String) {
+  products(first: $first, after: $after, query: $tag) {
+    pageInfo {
+      startCursor
+      endCursor
+      hasNextPage
+      hasPreviousPage
+    }
     nodes {
       id
-      handle
       title
+      handle
       featuredImage {
         url
       }

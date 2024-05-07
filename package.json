@@ -12,6 +12,7 @@
   "dependencies": {
     "@apollo/client": "^3.10.1",
     "@apollo/experimental-nextjs-app-support": "^0.10.0",
+    "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
     "graphql": "^16.8.1",

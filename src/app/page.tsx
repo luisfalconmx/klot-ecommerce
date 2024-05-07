@@ -8,7 +8,7 @@ import { ThemeSwitch } from "@/components";
 
 export default async function Home() {
   const categories = await getCollections();
-  const topSelling = await getProductsByTag("top_selling");
+  const topSelling = await getProductsByTag("top_selling", 10);
 
   return (
     <>

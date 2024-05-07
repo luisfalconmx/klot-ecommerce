@@ -8,6 +8,7 @@ import { ColorSelector } from "./ColorSelector/ColorSelector";
 import { QuantitySelector } from "./QuantitySelector/QuantitySelector";
 import { Wishlist } from "./Wishlist/Wishlist";
 import { ThemeSwitch } from "./ThemeSwitch/ThemeSwitch";
+import { InfiniteScroll } from "./InfiniteScroll/InfiniteScroll";
 
 export {
   Navbar,
@@ -20,4 +21,5 @@ export {
   QuantitySelector,
   Wishlist,
   ThemeSwitch,
+  InfiniteScroll,
 };
