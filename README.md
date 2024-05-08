@@ -1,7 +1,7 @@
 <h1 align="center">klot-ecommerce</h1>
 
 <p align="center">
-  <b>The Password Generator is a web application developed using React.js that enables users to generate strong and secure passwords.</b><br />
+  <b>Experience a seamless ecommerce platform powered by cutting-edge technology. This project utilizes Shopify's GraphQL API integrated with Next.js app routing, offering lightning-fast navigation and dynamic content.</b><br />
   <sub>Created with ❤️ by luisfalconmx</sub>
 </p>
 
