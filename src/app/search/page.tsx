@@ -33,7 +33,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           className="w-full lg:max-w-screen-md lg:!mx-auto block"
           defaultValue={searchParams.term}
         />
-        <div></div>
+        <div className="hidden lg:block"></div>
       </section>
 
       {products.length <= 0 && (
@@ -59,7 +59,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       )}
 
       {products.length > 0 && (
-        <section className="mx-6">
+        <section className="">
           <div className="max-w-screen-md lg:mx-auto grid grid-cols-2 lg:grid-cols-3 gap-4 mx-6">
             {products.map((i) => (
               <ProductCard
