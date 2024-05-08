@@ -15,12 +15,14 @@
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
+    "formik": "^2.4.6",
     "graphql": "^16.8.1",
     "next": "14.2.2",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.3.0",
+    "yup": "^1.4.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
