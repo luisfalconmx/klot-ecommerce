@@ -3,8 +3,8 @@
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc";
 import {
-  SHOPIFY_GRAPHQL_ENDPOINT,
-  SHOPIFY_GRAPHQL_ACCESS_TOKEN,
+  SHOPIFY_STOREFRONT_ENDPOINT,
+  SHOPIFY_STOREFRONT_PRIVATE_ACCESS_TOKEN,
 } from "@/config/env";
 
 const { getClient } = registerApolloClient(() => {
@@ -14,9 +14,10 @@ const { getClient } = registerApolloClient(() => {
       // this needs to be an absolute url, as relative urls cannot be used in SSR
       headers: {
         "Content-Type": "application/json",
-        "X-Shopify-Access-Token": SHOPIFY_GRAPHQL_ACCESS_TOKEN,
+        "Shopify-Storefront-Private-Token":
+          SHOPIFY_STOREFRONT_PRIVATE_ACCESS_TOKEN,
       },
-      uri: SHOPIFY_GRAPHQL_ENDPOINT,
+      uri: SHOPIFY_STOREFRONT_ENDPOINT,
       fetchOptions: {
         cache: "no-store",
       },

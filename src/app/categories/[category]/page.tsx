@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
 import { ProductCard, InfiniteScroll } from "@/components";
-import { getProductsByCollection } from "@/services";
+import { getProductsByCollection } from "@/services/admin";
 import LensIllustration from "@/assets/images/lens-illustration.svg";
 import { notFound } from "next/navigation";
 

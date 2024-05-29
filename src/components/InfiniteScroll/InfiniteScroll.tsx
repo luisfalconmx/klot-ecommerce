@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useIntersectionObserver } from "@uidotdev/usehooks";
-import { getProductsByTag, getProductsByCollection } from "@/services";
+import { getProductsByTag, getProductsByCollection } from "@/services/admin";
 import { ProductCard } from "@/components";
 
 interface InfiniteScrollProps {

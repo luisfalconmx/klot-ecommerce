@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
-import { getProductsByTag } from "@/services";
+import { getProductsByTag } from "@/services/admin";
 import { ProductCard, InfiniteScroll } from "@/components";
 import { notFound } from "next/navigation";
 

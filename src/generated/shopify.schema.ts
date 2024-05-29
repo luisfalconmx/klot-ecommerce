@@ -14958,9 +14958,15 @@ export type EmailInput = {
 /** Error position information in a ShopifyQL parsing error. */
 export type ErrorPosition = {
   __typename?: 'ErrorPosition';
-  /** The character position of the error in the line. */
+  /**
+   * The character position of the error in the line.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   character: Scalars['Int']['output'];
-  /** The line number of the error. */
+  /**
+   * The line number of the error.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   line: Scalars['Int']['output'];
 };
 
@@ -15002,13 +15008,16 @@ export type ErrorsWebPixelUserError = DisplayableError & {
 export enum ErrorsWebPixelUserErrorCode {
   /** The input value is blank. */
   Blank = 'BLANK',
-  /** The provided settings ID does not match the expected settings definition on the app. */
+  /** The provided settings does not match the expected settings definition on the app. */
   InvalidSettings = 'INVALID_SETTINGS',
   /** The record with the ID used as the input value couldn't be found. */
   NotFound = 'NOT_FOUND',
   /** The input value is already taken. */
   Taken = 'TAKEN',
-  /** An error occurred and the web pixel couldnt be deleted. */
+  /**
+   * An error occurred and the web pixel couldnt be deleted.
+   * @deprecated `UNABLE_TO_DELETE` is deprecated. Use `UNEXPECTED_ERROR` instead.
+   */
   UnableToDelete = 'UNABLE_TO_DELETE'
 }
 
@@ -16347,7 +16356,7 @@ export type FulfillmentLineItemEdge = {
  * ### Fulfillment orders assigned to the app for fulfillment
  *
  * Fulfillment service apps can retrieve the fulfillment orders which have been assigned to their locations with the
- * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+ * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
  * connection.
  * Use the `assignmentStatus` argument to control whether all assigned fulfillment orders
  * should be returned or only those where a merchant has sent a
@@ -16587,7 +16596,7 @@ export type FulfillmentOrder = Node & {
  * ### Fulfillment orders assigned to the app for fulfillment
  *
  * Fulfillment service apps can retrieve the fulfillment orders which have been assigned to their locations with the
- * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+ * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
  * connection.
  * Use the `assignmentStatus` argument to control whether all assigned fulfillment orders
  * should be returned or only those where a merchant has sent a
@@ -16760,7 +16769,7 @@ export type FulfillmentOrderFulfillmentOrdersForMergeArgs = {
  * ### Fulfillment orders assigned to the app for fulfillment
  *
  * Fulfillment service apps can retrieve the fulfillment orders which have been assigned to their locations with the
- * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+ * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
  * connection.
  * Use the `assignmentStatus` argument to control whether all assigned fulfillment orders
  * should be returned or only those where a merchant has sent a
@@ -16933,7 +16942,7 @@ export type FulfillmentOrderFulfillmentsArgs = {
  * ### Fulfillment orders assigned to the app for fulfillment
  *
  * Fulfillment service apps can retrieve the fulfillment orders which have been assigned to their locations with the
- * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+ * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
  * connection.
  * Use the `assignmentStatus` argument to control whether all assigned fulfillment orders
  * should be returned or only those where a merchant has sent a
@@ -17106,7 +17115,7 @@ export type FulfillmentOrderLineItemsArgs = {
  * ### Fulfillment orders assigned to the app for fulfillment
  *
  * Fulfillment service apps can retrieve the fulfillment orders which have been assigned to their locations with the
- * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+ * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
  * connection.
  * Use the `assignmentStatus` argument to control whether all assigned fulfillment orders
  * should be returned or only those where a merchant has sent a
@@ -17282,7 +17291,7 @@ export type FulfillmentOrderLocationsForMoveArgs = {
  * ### Fulfillment orders assigned to the app for fulfillment
  *
  * Fulfillment service apps can retrieve the fulfillment orders which have been assigned to their locations with the
- * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+ * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
  * connection.
  * Use the `assignmentStatus` argument to control whether all assigned fulfillment orders
  * should be returned or only those where a merchant has sent a
@@ -19641,7 +19650,7 @@ export type InventoryAdjustQuantitiesInput = {
    * A freeform URI that represents why the inventory change happened. This can be the entity adjusting inventory
    * quantities or the Shopify resource that's associated with the inventory adjustment. For example, a unit in a
    * draft order might have been previously reserved, and a merchant later creates an order from the draft order.
-   * In this case, the referenceDocumentUri for the inventory adjustment is a URI referencing the order ID.
+   * In this case, the `referenceDocumentUri` for the inventory adjustment is a URI referencing the order ID.
    *
    */
   referenceDocumentUri?: InputMaybe<Scalars['String']['input']>;
@@ -19721,7 +19730,7 @@ export type InventoryAdjustmentGroup = Node & {
    * A freeform URI that represents why the inventory change happened. This can be the entity adjusting inventory
    * quantities or the Shopify resource that's associated with the inventory adjustment. For example, a unit in a
    * draft order might have been previously reserved, and a merchant later creates an order from the draft order.
-   * In this case, the referenceDocumentUri for the inventory adjustment is a URI referencing the order ID.
+   * In this case, the `referenceDocumentUri` for the inventory adjustment is a URI referencing the order ID.
    *
    */
   referenceDocumentUri?: Maybe<Scalars['String']['output']>;
@@ -19841,7 +19850,7 @@ export type InventoryChangeInput = {
   inventoryItemId: Scalars['ID']['input'];
   /**
    * A freeform URI that represents what changed the inventory quantities. A Shopify global ID isn't an accepted
-   * value (e.g./ specifying "gid://shopify/Order/123" would return an error). This field is required for all
+   * value. For example, specifying "gid://shopify/Order/123" would return an error. This field is required for all
    * quantity names except `available`. The field `ledgerDocumentUri` isn't supported for use with an `available`
    * quantity name.
    *
@@ -20126,7 +20135,7 @@ export type InventoryMoveQuantitiesInput = {
    * A freeform URI that represents why the inventory change happened. This can be the entity adjusting inventory
    * quantities or the Shopify resource that's associated with the inventory adjustment. For example, a unit in a
    * draft order might have been previously reserved, and a merchant later creates an order from the draft order.
-   * In this case, the referenceDocumentUri for the inventory adjustment is a URI referencing the order ID.
+   * In this case, the `referenceDocumentUri` for the inventory adjustment is a URI referencing the order ID.
    *
    */
   referenceDocumentUri: Scalars['String']['input'];
@@ -20214,7 +20223,7 @@ export type InventoryMoveQuantityChange = {
 export type InventoryMoveQuantityTerminalInput = {
   /**
    * A freeform URI that represents what changed the inventory quantities. A Shopify global ID isn't an accepted
-   * value (e.g./ specifying "gid://shopify/Order/123" would return an error). This field is required for a move of
+   * value. For example, specifying "gid://shopify/Order/123" would return an error. This field is required for a move of
    * all quantity names except `available`. The field `ledgerDocumentUri` isn't supported for use with an
    * `available` quantity name.
    *
@@ -20378,7 +20387,7 @@ export type InventorySetOnHandQuantitiesInput = {
    * A freeform URI that represents why the inventory change happened. This can be the entity adjusting inventory
    * quantities or the Shopify resource that's associated with the inventory adjustment. For example, a unit in a
    * draft order might have been previously reserved, and a merchant later creates an order from the draft order.
-   * In this case, the referenceDocumentUri for the inventory adjustment is a URI referencing the order ID.
+   * In this case, the `referenceDocumentUri` for the inventory adjustment is a URI referencing the order ID.
    *
    */
   referenceDocumentUri?: InputMaybe<Scalars['String']['input']>;
@@ -20451,7 +20460,7 @@ export type InventorySetScheduledChangesInput = {
    * A freeform URI that represents why the inventory change happened. This can be the entity adjusting inventory
    * quantities or the Shopify resource that's associated with the inventory adjustment. For example, a unit in a
    * draft order might have been previously reserved, and a merchant later creates an order from the draft order.
-   * In this case, the referenceDocumentUri for the inventory adjustment is a URI referencing the order ID.
+   * In this case, the `referenceDocumentUri` for the inventory adjustment is a URI referencing the order ID.
    *
    */
   referenceDocumentUri: Scalars['URL']['input'];
@@ -27019,7 +27028,10 @@ export type Mutation = {
   inventoryItemUpdate?: Maybe<InventoryItemUpdatePayload>;
   /** Moves inventory between inventory quantity names at a single location. */
   inventoryMoveQuantities?: Maybe<InventoryMoveQuantitiesPayload>;
-  /** Set inventory on-hand quantities using absolute values. */
+  /**
+   * Set inventory on-hand quantities using absolute values.
+   * @deprecated Use inventorySetQuantities to set on_hand or available quantites instead.
+   */
   inventorySetOnHandQuantities?: Maybe<InventorySetOnHandQuantitiesPayload>;
   /**
    * Set up scheduled changes of inventory items.
@@ -31134,7 +31146,7 @@ export type OptionValueUpdateInput = {
  */
 export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions & HasMetafieldDefinitions & HasMetafields & LegacyInteroperability & Node & {
   __typename?: 'Order';
-  /** A list of addtional fees applied to the order. */
+  /** A list of additional fees applied to the order. */
   additionalFees: Array<AdditionalFee>;
   /** A list of sales agreements associated with the order. */
   agreements: SalesAgreementConnection;
@@ -33436,11 +33448,20 @@ export type PageInfo = {
 /** A ShopifyQL parsing error. */
 export type ParseError = {
   __typename?: 'ParseError';
-  /** An error code for the error. */
+  /**
+   * An error code for the error.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   code: ParseErrorCode;
-  /** The description of the parsing error. */
+  /**
+   * The description of the parsing error.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   message: Scalars['String']['output'];
-  /** The start and end range for the error. */
+  /**
+   * The start and end range for the error.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   range?: Maybe<ParseErrorRange>;
 };
 
@@ -33549,9 +33570,15 @@ export enum ParseErrorCode {
 /** A range of ShopifyQL parsing errors. */
 export type ParseErrorRange = {
   __typename?: 'ParseErrorRange';
-  /** The ending position of the error. */
+  /**
+   * The ending position of the error.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   end: ErrorPosition;
-  /** The starting position of the error. */
+  /**
+   * The starting position of the error.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   start: ErrorPosition;
 };
 
@@ -34077,36 +34104,61 @@ export enum PaypalExpressSubscriptionsGatewayStatus {
 /** A PolarisViz data point structure for ShopifyQL query. */
 export type PolarisVizDataPoint = {
   __typename?: 'PolarisVizDataPoint';
-  /** The data key. Typically a category, dimension, or other qualitative data. */
+  /**
+   * The data key. Typically a category, dimension, or other qualitative data.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   key: Scalars['String']['output'];
-  /** The data value is numeric and quantitative. */
+  /**
+   * The data value is numeric and quantitative.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   value?: Maybe<Scalars['String']['output']>;
 };
 
 /** The data series used for PolarisViz visualization. */
 export type PolarisVizDataSeries = {
   __typename?: 'PolarisVizDataSeries';
-  /** An array of data points. */
+  /**
+   * An array of data points.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   data: Array<PolarisVizDataPoint>;
-  /** Whether the series represents comparison data. */
+  /**
+   * Whether the series represents comparison data.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   isComparison: Scalars['Boolean']['output'];
-  /** The name of the series. */
+  /**
+   * The name of the series.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   name: Scalars['String']['output'];
 };
 
 /** A PolarisViz response to a ShopifyQL query. */
 export type PolarisVizResponse = ShopifyqlResponse & {
   __typename?: 'PolarisVizResponse';
-  /** The PolarisViz visualization of data. */
+  /**
+   * The PolarisViz visualization of data.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   data: Array<PolarisVizDataSeries>;
-  /** A list of parse errors, if parsing fails. */
+  /**
+   * A list of parse errors, if parsing fails.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   parseErrors?: Maybe<Array<ParseError>>;
   /**
    * The result in a tabular format with schema and row data.
    *                 It's always present even if query has a `VISUALIZE` keyword.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
    */
   tableData?: Maybe<TableData>;
-  /** The type of visualization. For example, a line chart. */
+  /**
+   * The type of visualization. For example, a line chart.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   vizType: VisualizationType;
 };
 
@@ -35589,6 +35641,9 @@ export type PricingValue = MoneyV2 | PricingPercentageValue;
  * Private metafields are accessible only by the application that created them and only from the GraphQL Admin API.
  *
  * An application can create a maximum of 10 private metafields per shop resource.
+ *
+ * Private metafields are deprecated. Metafields created using a reserved namespace are private by default. See our guide for
+ * [migrating private metafields](https://shopify.dev/docs/apps/custom-data/metafields/migrate-private-metafields).
  *
  */
 export type PrivateMetafield = Node & {
@@ -39648,7 +39703,7 @@ export type QueryRoot = {
    * third-party fulfillment service locations, or all kinds of locations together.
    *
    * For fetching only the fulfillment orders assigned to the app's locations, use the
-   * [Shop.assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/latest/objects/Shop#connection-shop-assignedfulfillmentorders)
+   * [assignedFulfillmentOrders](https://shopify.dev/api/admin-graphql/2024-07/objects/queryroot#connection-assignedfulfillmentorders)
    * connection.
    *
    */
@@ -45448,6 +45503,7 @@ export type Shop = HasMetafields & HasPublishedTranslations & Node & {
    * Perform filtering with the `assignmentStatus` argument
    * to receive only fulfillment orders that have been requested to be fulfilled.
    *
+   * @deprecated Use `QueryRoot.assignedFulfillmentOrders` instead. Details: https://shopify.dev/changelog/moving-the-shop-assignedfulfillmentorders-connection-to-queryroot
    */
   assignedFulfillmentOrders: FulfillmentOrderConnection;
   /** The list of sales channels not currently installed on the shop. */
@@ -46379,7 +46435,10 @@ export type ShopFeatures = {
   bundles: BundlesFeature;
   /** Whether a shop's online store can have CAPTCHA protection. */
   captcha: Scalars['Boolean']['output'];
-  /** Whether a shop's online store can have CAPTCHA protection for domains not managed by Shopify. */
+  /**
+   * Whether a shop's online store can have CAPTCHA protection for domains not managed by Shopify.
+   * @deprecated No longer required for external domains
+   */
   captchaExternalDomains: Scalars['Boolean']['output'];
   /** Represents the cart transform feature configuration for the shop. */
   cartTransform: CartTransformFeature;
@@ -47575,12 +47634,16 @@ export enum ShopifyProtectStatus {
 
 /** A response to a ShopifyQL query. */
 export type ShopifyqlResponse = {
-  /** A list of parse errors, if parsing fails. */
+  /**
+   * A list of parse errors, if parsing fails.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   parseErrors?: Maybe<Array<ParseError>>;
   /**
    * The result in a tabular format with schema and row data.
    *           To be used as a raw 2-dimensional response of the query.
    *           It's always present even if query has a `VISUALIZE` keyword.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
    */
   tableData?: Maybe<TableData>;
 };
@@ -50467,33 +50530,60 @@ export type SuggestedReturnRefund = {
 /** The result in a tabular format with schema information and formatted and unformatted row data. */
 export type TableData = {
   __typename?: 'TableData';
-  /** The data table columns. */
+  /**
+   * The data table columns.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   columns: Array<TableDataColumn>;
-  /** The formatted data values. */
+  /**
+   * The formatted data values.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   rowData: Array<Array<Scalars['String']['output']>>;
-  /** The unformatted data values. */
+  /**
+   * The unformatted data values.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   unformattedData: Scalars['JSON']['output'];
 };
 
 /** A nested array representation of the data. An index in an array represents a row number. */
 export type TableDataColumn = {
   __typename?: 'TableDataColumn';
-  /** For comparison columns, indicates the column to compare to. */
+  /**
+   * For comparison columns, indicates the column to compare to.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   comparedTo: Scalars['String']['output'];
-  /** The data type of the column value. */
+  /**
+   * The data type of the column value.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   dataType: Scalars['String']['output'];
-  /** The display name of the column in the data model. */
+  /**
+   * The display name of the column in the data model.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   displayName: Scalars['String']['output'];
-  /** The name of the column in the data model. */
+  /**
+   * The name of the column in the data model.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   name: Scalars['String']['output'];
 };
 
 /** The default table response structure for a ShopifyQL query. */
 export type TableResponse = ShopifyqlResponse & {
   __typename?: 'TableResponse';
-  /** A list of parse errors, if parsing fails. */
+  /**
+   * A list of parse errors, if parsing fails.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   parseErrors?: Maybe<Array<ParseError>>;
-  /** The result in a tabular format with schema and row data. */
+  /**
+   * The result in a tabular format with schema and row data.
+   * @deprecated Not supported anymore, the ShopifyQL API is being sunset.
+   */
   tableData?: Maybe<TableData>;
 };
 
@@ -52982,7 +53072,7 @@ export type GetProductsByTagSuspenseQueryHookResult = ReturnType<typeof useGetPr
 export type GetProductsByTagQueryResult = Apollo.QueryResult<GetProductsByTagQuery, GetProductsByTagQueryVariables>;
 export const SearchProductsDocument = gql`
     query SearchProducts($searchTerm: String!) {
-  products(first: 10, query: $searchTerm) {
+  products(first: 12, query: $searchTerm) {
     nodes {
       id
       title

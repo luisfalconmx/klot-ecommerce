@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Navbar, Search, Category, ProductCard } from "@/components";
 import Logo from "@/assets/images/logo.svg";
-import { getCollections, getProductsByTag } from "@/services";
+import { getCollections, getProductsByTag } from "@/services/admin";
 import { createSlug } from "@/utils";
 import { ThemeSwitch } from "@/components";
 

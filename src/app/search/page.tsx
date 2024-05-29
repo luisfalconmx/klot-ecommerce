@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search, ProductCard } from "@/components";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
-import { searchProducts } from "@/services";
+import { searchProducts } from "@/services/admin";
 import LensIllustration from "@/assets/images/lens-illustration.svg";
 
 interface SearchPageProps {

@@ -9,7 +9,7 @@ const routes = [
   { path: "/", icon: IconHome, text: "Home" },
   { path: "/wishlist", icon: IconFavorites, text: "Wishlist" },
   { path: "/cart", icon: IconBag, text: "Cart" },
-  { path: "/account", icon: IconBag, text: "Account" },
+  { path: "/signup", icon: IconBag, text: "Account" },
 ];
 
 export const Navbar = () => (

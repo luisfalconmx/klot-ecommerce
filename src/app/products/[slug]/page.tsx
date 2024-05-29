@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getProductBySlug } from "@/services";
+import { getProductBySlug } from "@/services/admin";
 import { removeDuplicates, formatCurrency } from "@/utils";
 import {
   SizeSelector,

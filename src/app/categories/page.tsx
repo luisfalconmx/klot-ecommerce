@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Category } from "@/components";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
-import { getCollections } from "@/services";
+import { getCollections } from "@/services/admin";
 import { createSlug } from "@/utils";
 
 export default async function Categories() {
