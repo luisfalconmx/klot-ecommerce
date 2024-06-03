@@ -19,7 +19,6 @@ interface AcceptedValues {
 export const createCustomer = async (values: AcceptedValues) => {
   try {
     const client = getClient();
-    console.log({ values });
 
     const response = await client.mutate<
       CustomerCreateMutation,

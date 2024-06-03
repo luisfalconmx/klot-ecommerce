@@ -5,7 +5,11 @@ import { Formik, Field, Form, FormikHelpers } from "formik";
 import Link from "next/link";
 import Image from "next/image";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
-import { createCustomer } from "@/services/storefront";
+import {
+  createCustomer,
+  customerAccessCreateToken,
+} from "@/services/storefront";
+import { redirect } from "next/navigation";
 import * as Yup from "yup";
 
 interface FormValues {
