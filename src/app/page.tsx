@@ -5,16 +5,20 @@ import Logo from "@/assets/images/logo.svg";
 import { getCollections, getProductsByTag } from "@/services/admin";
 import { createSlug } from "@/utils";
 import { ThemeSwitch } from "@/components";
+import { getServerSession } from "next-auth";
 
 export default async function Home() {
   const categories = await getCollections();
   const topSelling = await getProductsByTag("top_selling", 10);
+  const session = await getServerSession();
+
+  console.log({ session });
 
   return (
     <>
       <Navbar />
       <main className="mt-12 mb-24 max-w-screen-xl mx-auto">
-        <section className="grid grid-cols-2 lg:grid-cols-[80px_1fr_350px_30px] lg:gap-x-8 mx-6 justify-between mb-8 items-center gap-y-6">
+        <section className="grid grid-cols-2 lg:grid-cols-[80px_1fr_350px_auto] lg:gap-x-8 mx-6 justify-between mb-8 items-center gap-y-6">
           <Image
             src={Logo}
             alt=""
@@ -47,8 +51,17 @@ export default async function Home() {
             </ul>
           </nav>
           <Search className="w-full row-start-2 lg:row-start-auto col-span-2 lg:col-auto" />
-          <div className="ml-auto">
+          <div className="ml-auto flex items-center">
             <ThemeSwitch />
+            {session && session.user?.image && (
+              <Image
+                src={session.user.image}
+                alt=""
+                width={36}
+                height={36}
+                className="rounded-full"
+              />
+            )}
           </div>
         </section>
 

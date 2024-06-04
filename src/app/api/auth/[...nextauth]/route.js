@@ -3,6 +3,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { customerAccessCreateToken, customer } from "@/services/storefront";
 
 const authOptions = {
+  pages: {
+    signIn: "/signin",
+  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -24,8 +27,10 @@ const authOptions = {
           if (customerInfo.data.customer.id) {
             return {
               id: customerInfo.data.customer.id,
-              name: customerInfo.data.customer.firstName,
+              name: `${customerInfo.data.customer.firstName} ${customerInfo.data.customer.lastName}`,
               email: customerInfo.data.customer.email,
+              // generate a random image for the user from the name
+              image: `https://eu.ui-avatars.com/api/?name=${customerInfo.data.customer.firstName}+${customerInfo.data.customer.lastName}`,
             };
           }
 
