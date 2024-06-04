@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { signIn } from "next-auth/react";
 import { Formik, Field, Form, FormikHelpers } from "formik";
 import Link from "next/link";
 import Image from "next/image";
 import IconArrowLeft from "@/assets/icons/icon-arrow-left.svg";
-import { customerAccessCreateToken } from "@/services/storefront";
 import * as Yup from "yup";
 import { redirect } from "next/navigation";
 
@@ -16,11 +16,18 @@ interface FormValues {
 
 export default function SigninPage() {
   const [error, setError] = useState<string | null>(null);
+  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
 
   const schemaValidation = Yup.object().shape({
     email: Yup.string().email().required("Email is required"),
     password: Yup.string().min(8).required("Password is required"),
   });
+
+  useEffect(() => {
+    if (isLoggingIn) {
+      redirect("/");
+    }
+  }, [isLoggingIn]);
 
   return (
     <main className="mt-12 mb-24 max-w-screen-xl lg:mx-auto">
@@ -47,29 +54,20 @@ export default function SigninPage() {
           { setSubmitting }: FormikHelpers<FormValues>
         ) => {
           setError(null);
-          const response = await customerAccessCreateToken({
+
+          const response = await signIn("credentials", {
+            redirect: false,
             email: values.email,
             password: values.password,
+            callbackUrl: "/",
           });
 
-          if (
-            !response ||
-            response?.errors ||
-            response.data?.customerAccessTokenCreate?.customerUserErrors
-          ) {
-            let message =
-              "There was an error logging in. Please try again later.";
+          if (response?.error) {
+            return setError(response.error);
+          }
 
-            if (
-              response?.data?.customerAccessTokenCreate?.customerUserErrors[0]
-                .message
-            ) {
-              message =
-                response?.data?.customerAccessTokenCreate?.customerUserErrors[0]
-                  .message;
-            }
-
-            return setError(message);
+          if (!response?.error) {
+            setIsLoggingIn(true);
           }
 
           setSubmitting(false);
