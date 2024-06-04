@@ -73,7 +73,6 @@ export default function SigninPage() {
           }
 
           setSubmitting(false);
-          redirect("/");
         }}
       >
         {({ errors, touched }) => (

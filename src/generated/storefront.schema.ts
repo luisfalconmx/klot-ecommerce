@@ -8521,6 +8521,13 @@ export type CustomerCreateMutationVariables = Exact<{
 
 export type CustomerCreateMutation = { __typename?: 'Mutation', customerCreate?: { __typename?: 'CustomerCreatePayload', customer?: { __typename?: 'Customer', firstName?: string | null, lastName?: string | null, email?: string | null, phone?: string | null, acceptsMarketing: boolean } | null, customerUserErrors: Array<{ __typename?: 'CustomerUserError', field?: Array<string> | null, message: string, code?: CustomerErrorCode | null }> } | null };
 
+export type CustomerQueryVariables = Exact<{
+  customerAccessToken: Scalars['String']['input'];
+}>;
+
+
+export type CustomerQuery = { __typename?: 'QueryRoot', customer?: { __typename?: 'Customer', id: string, firstName?: string | null, lastName?: string | null, acceptsMarketing: boolean, email?: string | null, phone?: string | null } | null };
+
 export type CustomerAccessCreateTokenMutationVariables = Exact<{
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -8574,6 +8581,51 @@ export function useCustomerCreateMutation(baseOptions?: Apollo.MutationHookOptio
 export type CustomerCreateMutationHookResult = ReturnType<typeof useCustomerCreateMutation>;
 export type CustomerCreateMutationResult = Apollo.MutationResult<CustomerCreateMutation>;
 export type CustomerCreateMutationOptions = Apollo.BaseMutationOptions<CustomerCreateMutation, CustomerCreateMutationVariables>;
+export const CustomerDocument = gql`
+    query Customer($customerAccessToken: String!) {
+  customer(customerAccessToken: $customerAccessToken) {
+    id
+    firstName
+    lastName
+    acceptsMarketing
+    email
+    phone
+  }
+}
+    `;
+
+/**
+ * __useCustomerQuery__
+ *
+ * To run a query within a React component, call `useCustomerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCustomerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCustomerQuery({
+ *   variables: {
+ *      customerAccessToken: // value for 'customerAccessToken'
+ *   },
+ * });
+ */
+export function useCustomerQuery(baseOptions: Apollo.QueryHookOptions<CustomerQuery, CustomerQueryVariables> & ({ variables: CustomerQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CustomerQuery, CustomerQueryVariables>(CustomerDocument, options);
+      }
+export function useCustomerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CustomerQuery, CustomerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CustomerQuery, CustomerQueryVariables>(CustomerDocument, options);
+        }
+export function useCustomerSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CustomerQuery, CustomerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CustomerQuery, CustomerQueryVariables>(CustomerDocument, options);
+        }
+export type CustomerQueryHookResult = ReturnType<typeof useCustomerQuery>;
+export type CustomerLazyQueryHookResult = ReturnType<typeof useCustomerLazyQuery>;
+export type CustomerSuspenseQueryHookResult = ReturnType<typeof useCustomerSuspenseQuery>;
+export type CustomerQueryResult = Apollo.QueryResult<CustomerQuery, CustomerQueryVariables>;
 export const CustomerAccessCreateTokenDocument = gql`
     mutation CustomerAccessCreateToken($email: String!, $password: String!) {
   customerAccessTokenCreate(input: {email: $email, password: $password}) {

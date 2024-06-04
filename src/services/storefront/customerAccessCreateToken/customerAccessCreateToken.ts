@@ -1,6 +1,5 @@
 "use server";
 
-// import { cookies } from "next/headers";
 import { getClient } from "@/clients/storefrontClient";
 import {
   CustomerAccessCreateTokenMutation,
@@ -16,7 +15,6 @@ interface AcceptedValues {
 export const customerAccessCreateToken = async (values: AcceptedValues) => {
   try {
     const client = await getClient();
-    // const cookieStore = await cookies();
 
     const response = await client.mutate<
       CustomerAccessCreateTokenMutation,
@@ -28,21 +26,6 @@ export const customerAccessCreateToken = async (values: AcceptedValues) => {
         password: values.password,
       },
     });
-
-    const accessToken =
-      response.data?.customerAccessTokenCreate?.customerAccessToken
-        ?.accessToken;
-    const expiresAt =
-      response.data?.customerAccessTokenCreate?.customerAccessToken?.expiresAt;
-
-    // if (accessToken) {
-    //   cookieStore.set("accessToken", accessToken, {
-    //     path: "/",
-    //     expires: expiresAt,
-    //     httpOnly: true,
-    //     sameSite: "strict",
-    //   });
-    // }
 
     return response;
   } catch (error) {
