@@ -6,13 +6,12 @@ import { getCollections, getProductsByTag } from "@/services/admin";
 import { createSlug } from "@/utils";
 import { ThemeSwitch } from "@/components";
 import { getServerSession } from "next-auth";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
 
 export default async function Home() {
   const categories = await getCollections();
   const topSelling = await getProductsByTag("top_selling", 10);
   const session = await getServerSession();
-
-  console.log({ session });
 
   return (
     <>
@@ -43,24 +42,27 @@ export default async function Home() {
                   Cart
                 </Link>
               </li>
-              <li>
-                <Link href="/signin" className="font-medium">
-                  Sign In
-                </Link>
-              </li>
             </ul>
           </nav>
           <Search className="w-full row-start-2 lg:row-start-auto col-span-2 lg:col-auto" />
           <div className="ml-auto flex items-center">
             <ThemeSwitch />
-            {session && session.user?.image && (
-              <Image
-                src={session.user.image}
-                alt=""
-                width={36}
-                height={36}
-                className="rounded-full"
-              />
+            {session ? (
+              session.user?.image && (
+                <Link href="/account">
+                  <Image
+                    src={session.user.image}
+                    alt=""
+                    width={36}
+                    height={36}
+                    className="rounded-full"
+                  />
+                </Link>
+              )
+            ) : (
+              <Link href="/signin">
+                <UserCircleIcon className="h-8 w-8 text-primary-100 cursor-pointer" />
+              </Link>
             )}
           </div>
         </section>

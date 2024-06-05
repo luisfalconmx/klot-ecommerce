@@ -114,6 +114,21 @@ export default function SigninPage() {
       </Formik>
 
       {error && <p className="text-red-500 text-center mt-4 px-4">{error}</p>}
+
+      <section className="mt-8 text-center">
+        <Link href="/forgot-password" className="text-primary">
+          Forgot password?
+        </Link>
+      </section>
+
+      <section className="mt-8 text-center">
+        <p>
+          Don&apos;t have an account?{" "}
+          <Link href="/signup" className="text-primary font-bold">
+            Sign up
+          </Link>
+        </p>
+      </section>
     </main>
   );
 }

@@ -1,34 +1,83 @@
-import Image from "next/image";
 import Link from "next/link";
-import IconHome from "@/assets/icons/icon-home.svg";
-import IconBag from "@/assets/icons/icon-bag-alt.svg";
-import IconFavorites from "@/assets/icons/icon-fav-alt.svg";
+import Image from "next/image";
+import {
+  HomeIcon,
+  HeartIcon,
+  ShoppingBagIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/outline";
 import styles from "./Navbar.module.css";
+import { getServerSession } from "next-auth";
 
 const routes = [
-  { path: "/", icon: IconHome, text: "Home" },
-  { path: "/wishlist", icon: IconFavorites, text: "Wishlist" },
-  { path: "/cart", icon: IconBag, text: "Cart" },
-  { path: "/signup", icon: IconBag, text: "Account" },
+  {
+    path: "/",
+    icon: (
+      <HomeIcon width={32} height={32} className={styles["Navbar__icon"]} />
+    ),
+    text: "Home",
+  },
+  {
+    path: "/wishlist",
+    icon: (
+      <HeartIcon width={32} height={32} className={styles["Navbar__icon"]} />
+    ),
+    text: "Wishlist",
+  },
+  {
+    path: "/cart",
+    icon: (
+      <ShoppingBagIcon
+        width={32}
+        height={32}
+        className={styles["Navbar__icon"]}
+      />
+    ),
+    text: "Cart",
+  },
 ];
 
-export const Navbar = () => (
-  <nav className={styles["Navbar"]}>
-    <ul className={styles["Navbar__list"]}>
-      {routes.map((route) => (
-        <li key={route.path} className={styles["Navbar__item"]}>
-          <Link href={route.path}>
-            <Image
-              src={route.icon}
-              alt=""
-              width={48}
-              height={48}
-              className={styles["Navbar__icon"]}
-            />
-            <p className={styles["Navbar__text"]}>{route.text}</p>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  </nav>
-);
+export const Navbar = async () => {
+  const session = await getServerSession();
+
+  return (
+    <nav className={styles["Navbar"]}>
+      <ul className={styles["Navbar__list"]}>
+        {routes.map((route) => (
+          <li key={route.path} className={styles["Navbar__item"]}>
+            <Link className={styles["Navbar__link"]} href={route.path}>
+              {route.icon}
+              <p className={styles["Navbar__text"]}>{route.text}</p>
+            </Link>
+          </li>
+        ))}
+
+        {session ? (
+          <li className={styles["Navbar__item"]}>
+            <Link className={styles["Navbar__link"]} href="/account">
+              <Image
+                src={session.user?.image || ""}
+                alt={session.user?.name || ""}
+                width={32}
+                height={32}
+                className={styles["Navbar__user"]}
+              />
+              <p className={styles["Navbar__text"]}>Account</p>
+            </Link>
+          </li>
+        ) : (
+          <li className={styles["Navbar__item"]}>
+            <Link href="/signin">
+              <UserCircleIcon
+                width={32}
+                height={32}
+                className={styles["Navbar__icon"]}
+              />
+              <p className={styles["Navbar__text"]}>Signin</p>
+            </Link>
+          </li>
+        )}
+      </ul>
+    </nav>
+  );
+};

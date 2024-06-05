@@ -212,6 +212,15 @@ export default function SignupPage() {
           Account created successfully
         </p>
       )}
+
+      <div className="mt-8 text-center">
+        <p>
+          Already have an account?
+          <Link href="/signin" className="text-primary font-bold ml-1">
+            Sign in
+          </Link>
+        </p>
+      </div>
     </main>
   );
 }
